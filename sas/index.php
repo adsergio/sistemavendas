@@ -601,7 +601,8 @@ echo $id_usuario;
 				if (mensagem.trim() == "Editado com Sucesso") {
 
 					$('#btn-fechar-perfil').click();
-					location.reload();				
+					//location.reload();
+					carregarDados();				
 						
 
 				} else {
