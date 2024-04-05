@@ -1,7 +1,5 @@
 <?php
 require_once("../conexao.php");
-require_once("verificar.php");
-
 
 if (@$_GET['pagina'] != "") {
 	$pagina = @$_GET['pagina'];
@@ -26,9 +24,6 @@ if ($total_reg == 0) {
 	$endereco_sistema = $res[0]["endereco_sistema"];
 }
 
-
-
-
 $id_usuario = "<script>document.write(localStorage.id_usu)</script>";
 echo $id_usuario;
 
@@ -37,10 +32,13 @@ echo $id_usuario;
 <html>
 
 <head>
-	<title>Nome Sistema</title>
+	<title><?php echo $nome_sistema ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="" type="image/x-icon">
+	
+	<!-- -->
+	<link rel="shortcut icon" href="../img/icone.png" type="image/x-icon">  
+	
 
 	<script type="application/x-javascript">
 		addEventListener("load", function() {
@@ -129,13 +127,15 @@ echo $id_usuario;
 		});
 	</script>
 	<!-- //pie-chart --><!-- index page sales reviews visitors pie chart -->
-
+<?php
+require_once("verificar.php");
+?>
 
 </head>
 
 <body class="cbp-spmenu-push">
 	<!-- //style="display:none" -->
-	<div class="main-content id=" conteudo-principal">
+	<div class="main-content id="conteudo-principal">
 		<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
 			<!--left-fixed -navigation-->
 			<aside class="sidebar-left" style="overflow: scroll; height:100%; scrollbar-width: thin;">
@@ -147,7 +147,7 @@ echo $id_usuario;
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<h1><a class="navbar-brand" href="index.php"><span class="fa fa-cutlery"></span> Sistema SAS<span class="dashboard_text">Sistema de Vendas</span></a></h1>
+						<h1><a class="navbar-brand" href="index.php"><span class="fa fa-usd"></span> Sistema SAS<span class="dashboard_text"><?php echo $nome_sistema ?></span></a></h1>
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="sidebar-menu">
@@ -535,7 +535,7 @@ echo $id_usuario;
 						</div>
 						<div class="col-md-2">
 							<div id="divImg" style="background:#dbdbdb">
-								<img src="../img/logo.png" width="100px" id="target-logo">
+								<img src="../img/logo.png" width="80px" id="target-logo">
 							</div>
 						</div>
 

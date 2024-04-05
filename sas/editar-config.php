@@ -32,7 +32,7 @@ if(@$_FILES['foto-logo']['name'] != ""){
 	}
 }
 
-//SCRIPT PARA SUBIR ICONE RELATÓRIO NO SERVIDOR
+//SCRIPT PARA SUBIR ICONE DO SISTEMA NO SERVIDOR
 
 $nome_img = @$_FILES['foto-icone']['name'];
 $caminho = '../img/icone.png';
@@ -42,6 +42,27 @@ $imagem_temp = @$_FILES['foto-icone']['tmp_name'];
 if(@$_FILES['foto-icone']['name'] != ""){
 	$ext = pathinfo($nome_img, PATHINFO_EXTENSION);   
 	if($ext == 'png'){ 
+	
+		
+			
+		
+		move_uploaded_file($imagem_temp, $caminho);
+	}else{
+		echo 'Extensão de Imagem não permitida, somente JPG';
+		exit();
+	}
+}
+
+//SCRIPT PARA SUBIR RELATÓRIO NO SERVIDOR
+
+$nome_img = @$_FILES['foto-logo-rel']['name'];
+$caminho = '../img/logo-rel.jpg';
+
+$imagem_temp = @$_FILES['foto-logo-rel']['tmp_name']; 
+
+if(@$_FILES['foto-logo-rel']['name'] != ""){
+	$ext = pathinfo($nome_img, PATHINFO_EXTENSION);   
+	if($ext == 'jpg'){ 
 	
 		
 			

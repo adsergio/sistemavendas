@@ -48,7 +48,7 @@ body a:hover{
 }
 span.dashboard_text {
     font-size: 12px;
-    text-transform: capitalize;
+    text-transform: capitalize; 
     display: block;
     letter-spacing: 1px;
     padding-left: 35px;

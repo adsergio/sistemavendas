@@ -15,6 +15,14 @@ $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_reg = count($res);
 
 if ($total_reg > 0) {
+
+    if($res[0]['ativo'] != 'Sim') {
+        echo '<script> alert ("Usuário Inativo contate o s Administrador")</script>';
+        echo '<script>window.location="index.php"</script>';
+        exit();
+
+    }
+    
     $id = $res[0]['id'];
     $nivel = $res[0]['nivel'];
 
@@ -25,12 +33,7 @@ if ($total_reg > 0) {
     
     
 
-   if($res[0]['ativo'] != 'Sim') {
-        echo '<script> alert ("Usuário Inativo contate o s Administrador")</script>';
-        echo '<script>window.location="index.php"</script>';
-        exit();
-
-    }
+   
 
     if($nivel == 'SAS') {
         echo '<script>window.location="sas"</script>';

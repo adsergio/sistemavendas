@@ -15,6 +15,12 @@ if($senha != $conf_senha){
     exit();
 }
 
+if($email == "" and $cpf==""){
+    echo "Os campos de senha ou CPF devem ser preenchidos.";
+    exit();
+}
+
+
 
 
 //validar troca da foto
