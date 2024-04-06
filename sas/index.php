@@ -167,6 +167,10 @@ require_once("verificar.php");
 									<li><a href="index.php?pagina=usuarios"><i class="fa fa-angle-right"></i> Usuários</a></li>
 
 								</ul>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=empresas"><i class="fa fa-angle-right"></i> Empresas</a></li>
+
+								</ul>
 							</li>
 
 						</ul>
