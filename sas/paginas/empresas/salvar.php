@@ -1,7 +1,7 @@
 <?php
 require_once("../../../conexao.php");
 $tabela = 'empresas';
-$nome = $_POST["nome_rep"];
+$nome_resp = $_POST["nome_resp"];
 $telefone = $_POST['telefone'];
 $email = $_POST["email"];
 $cpf = $_POST['cpf'];
@@ -27,6 +27,24 @@ if ($cnpj != "") {
     }
 }
 
+if ($id == ""){
+    $query = $pdo->prepare("INSERT $tabela SET nome_resp = :nome_resp, telefone = :telefone, 
+    email = :email,  cpf = :cpf, cnpj = :cnpj, endereco = :endereco ,ativo = 'Sim', data_cad = curDate(),
+    data_pgto = '$data_pgto', valor = :valor ");
+}else{
+    $query = $pdo->prepare("UPDATE $tabela SET nome_resp = :nome_resp, telefone = :telefone, 
+    email = :email,  cpf = :cpf, cnpj = :cnpj, endereco = :endereco ,ativo = 'Sim', data_cad = curDate(),
+    data_pgto = '$data_pgto', valor = :valor WHERE id = '$id' ");
+}
+$query->bindValue(":nome_resp", $nome_resp);
+$query->bindValue(":email", $email);
+$query->bindValue(":telefone", $telefone);
+$query->bindValue(":cpf", $cpf);
+$query->bindValue(":cnpj", $cnpj);
+$query->bindValue(":endereco", $endereco);
+$query->bindValue(":valor", $valor);
+$query->execute();
 
+echo"Editado com Sucesso";
 
-
+$id_empresa = $pdo->lastInsertId();

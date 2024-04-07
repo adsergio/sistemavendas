@@ -2,7 +2,7 @@
 require_once("conexao.php");
 $senha = '123';
   $senha_crip = md5($senha);
-  
+
 //Criar um usuário caso não tenha nenhum super adm sas
 $query = $pdo->query("SELECT * FROM usuarios WHERE nivel = 'SAS'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -21,10 +21,9 @@ $total_reg = count($res);
 
 if ($total_reg == 0) {
   $pdo->query("INSERT into empresas SET nome_resp = 'Empresa Teste', cpf = '000.000.000-00', telefone = '(31) 9 8841-0000',
-  email = 'teste@gmail.com', ativo = 'Sim', data_cad = curDate(), data_pag = curDate(), endereco = 'Rua teste, 139 Bairro JD Brasilia' ");
+  email = 'teste@gmail.com', ativo = 'Sim', data_cad = curDate(), data_pgto = curDate(), endereco = 'Rua teste, 139 Bairro JD Brasilia' ");
   $id_empresa = $pdo->lastInsertId() ;
-  echo $id_empresa;
-
+  
   $pdo->query("INSERT into usuarios SET empresa = $id_empresa,nome = 'Administrador', cpf =' 9999.999.9999-99',
   email = 'teste@gmail.com', senha = '$senha', senha_crip = '$senha_crip', ativo = 'Sim', foto = 'sem-foto.jpg', nivel = 'Administrador', data = curDate() ");
   

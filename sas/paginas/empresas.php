@@ -2,7 +2,7 @@
 $pag = 'empresas';
 ?>
 
-<a class="btn btn-primary" onclick="inserir()" class="btn btn-primary btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i> Nova Localidade</a>
+<a class="btn btn-primary" onclick="inserir()" class="btn btn-primary btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i> Nova Empresa</a>
 
 <div class="bs-example widget-shadow" style="padding:15px" id="listar">
 </div>
