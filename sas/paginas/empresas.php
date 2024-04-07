@@ -26,7 +26,7 @@ $pag = 'empresas';
 					<div class="row">
 						<div class="col-md-6">
 							<label>Nome</label>
-							<input type="text" class="form-control" id="nome" name="nome" placeholder="Seu Nome" required>
+							<input type="text" class="form-control" id="nome" name="nome_resp" placeholder="Seu Nome" required>
 						</div>
 
 						<div class="col-md-6">
@@ -50,7 +50,7 @@ $pag = 'empresas';
                     <div class="row">
 						<div class="col-md-4">
 							<label>CNPJ</label>
-							<input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ">
+							<input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Seu CNPJ">
 						</div>
                         <div class="col-md-4">
 							<label>Valor Mensalidade</label>
@@ -59,7 +59,7 @@ $pag = 'empresas';
                         
 						<div class="col-md-4">
 							<label>Data PGTO</label>
-							<input type="date" class="form-control" id="pgto" name="pgto" placeholder="" >
+							<input type="date" class="form-control" id="pgto" name="data-pgto" placeholder="" >
 						</div>
 
 						
