@@ -1,3 +1,24 @@
+$(document).ready(function() {    
+    listar();    
+} );
+
+function listar(){
+    var id_usuario = localStorage.id_usu;
+    $.ajax({
+        url: 'paginas/' + pag + "/listar.php",
+        method: 'POST',
+        data: {id_usuario},
+        dataType: "html",
+
+        success:function(result){
+            $("#listar").html(result);
+            $('#mensagem-excluir').text('');
+        }
+    });
+}
+
+
+
 function inserir(){
     $('#mensagem').text('');
     $('#titulo_inserir').text('Inserir Registro');

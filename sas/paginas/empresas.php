@@ -15,7 +15,7 @@ $pag = 'empresas';
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="exampleModalLabel"><span id = "titulo_inserir"></span></h4>
-				<button id="btn-fecha" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+				<button id="btn-fechar" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
