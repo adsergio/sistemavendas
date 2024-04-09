@@ -9,8 +9,9 @@ $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_reg = count($res);
 
 if($total_reg > 0){
-$nome_usu = $res[0]["nome"].'-*'. $res[0]['nivel'].'-*'. $res[0]['foto'].'-*'. $res[0]['telefone'].'-*'. $res[0]['cpf'].'-*'. $res[0]['email']
-.'-*'. $res[0]['senha'].'-*'. $res[0]['endereco'];
-echo $nome_usu;
-
+echo $res[0]['nome'].'-*'. $res[0]['nivel'].'-*'. $res[0]['foto'].'-*'. $res[0]['telefone'].'-*'. $res[0]['cpf'].'-*'. $res[0]['email']
+.'-*'. $res[0]['senha'].'-*'. $res[0]['endereco'].'-*'. $res[0]['ativo'];
 }
+
+
+

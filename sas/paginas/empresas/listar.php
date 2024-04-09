@@ -40,16 +40,26 @@ for($i=0; $i < $total_reg; $i++){
         $valor  = $res[$i]['valor'];
         $endereco = $res[$i]['endereco'];
 
+
+        //Formatação de campos
 $valorF = number_format($valor, 2, ',', '.');
 $data_pgtoF = implode('/', array_reverse(explode('-', $data_pgto)));
+$data_cadF = implode('/', array_reverse(explode('-', $data_cad)));
+$whats = '55'.preg_replace('/[ ()-]+/' , '' , $telefone);
+
 
 if($ativo == 'Sim'){
+    $icone = 'fa-check-square';
+    $titulo_link = 'Desativar Item';
+    $acao = 'Não';
     $classe_ativo = '';
-} else{
-    //$classe_ativo = 'text-muted';
+}else{
+    $icone = 'fa-square-o';
+    $titulo_link = 'Ativar Item';
+    $acao = 'Sim';
     $classe_ativo = 'dbdbdb';
-
 }
+
      
 echo <<<HTML
 <!--<tr class="{$classe_ativo}">-->
@@ -62,7 +72,26 @@ echo <<<HTML
 <td class="esc">R$ {$valorF}</td>
 <td>
     <big><a href="#" onclick="editar('{$id}','{$nome}','{$email}','{$telefone}','{$cpf}',
-    '{$cnpj}','{$valor}','{$data_pgto}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
+    '{$cnpj}','{$valor}','{$data_pgto}','{$endereco}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
+
+<li class="dropdown head-dpdn2" style="display: inline-block;">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-trash-o text-danger"></i></big></a>
+
+		<ul class="dropdown-menu" style="margin-left:-230px;">
+		<li>
+		<div class="notification_desc2">
+		<p>Confirmar Exclusão? <a href="#" onclick="excluir('{$id}')"><span class="text-danger">Sim</span></a></p>
+		</div>
+		</li>										
+		</ul>
+		</li>
+        <big><a href="#" onclick="mostrar('{$nome}','{$email}','{$telefone}','{$cpf}',
+        '{$cnpj}','{$valorF}','{$data_pgtoF}','{$ativo}','{$data_cadF}','{$endereco}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary"></i></a></big>
+
+        <big><a href="#" onclick="ativar('{$id}', '{$acao}')" title="{$titulo_link}"><i class="fa {$icone} text-success"></i></a></big>
+
+        <big><a href="http://api.whatsapp.com/send?1=pt_BR&phone=$whats&text=" target="_blank" title="Abrir Whatsapp" class="text-verde"><i class="fa fa-whatsapp text-verde"></i></a></big>
+
 </td>    
 </tr>
 HTML;
@@ -92,7 +121,7 @@ HTML;
 );
 </script>
 <script type="text/javascript">
-	function editar(id, nome, email, telefone, cpf, cnpj,valor,data_pgto){
+	function editar(id, nome, email, telefone, cpf, cnpj,valor,data_pgto,endereco){
 		$('#id').val(id);
 		$('#nome').val(nome);
         $('#email').val(email);
@@ -101,6 +130,7 @@ HTML;
         $('#cnpj').val(cnpj);
         $('#valor').val(valor);
         $('#data_pgto').val(data_pgto);
+        $('#endereco').val(endereco);
 		
 		
 		
@@ -108,10 +138,42 @@ HTML;
 		$('#modalForm').modal('show');
 		
 	}
+//Mostrar campos
+//'{$nome}','{$email}','{$telefone}','{$cpf}',
+//'{$cnpj}','{$valorF}','{$data_pgtoF}','{$endereco}', '{$ativo}', '{$data_cadF}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary"></i></a></big>
+
+
+    </script>
+<script type="text/javascript">
+	function mostrar(nome, email, telefone, cpf, cnpj,valor,data_pgto,ativo,data_cad, endereco){
+	
+		$('#titulo_dados').text(nome);
+        $('#email_dados').text(email);
+        $('#telefone_dados').text(telefone);
+        $('#cpf_dados').text(cpf);
+        $('#cnpj_dados').text(cnpj);
+        $('#valor_dados').text(valor);
+        $('#data_pgto_dados').text(data_pgto);
+        $('#ativo_dados').text(ativo);
+        $('#data_cad_dados').text(data_cad);
+        $('#endereco_dados').text(endereco);
+		
+			
+		$('#modalDados').modal('show');
+		
+	}
 
 	function limparCampos(){
 		$('#id').val('');
 		$('#nome').val('');	
+        $('#nome').val('');
+        $('#email').val('');
+        $('#telefone').val('');
+        $('#cpf').val('');
+        $('#cnpj').val('');
+        $('#valor').val('');
+        $('#data_pgto').val('');
+        $('#endereco').val('');
 	}
 
 </script>

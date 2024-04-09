@@ -41,10 +41,8 @@ if ($id == ""){
     $query = $pdo->prepare("UPDATE $tabela SET nome_resp = :nome_resp, telefone = :telefone, 
     email = :email,  cpf = :cpf, cnpj = :cnpj, endereco = :endereco ,ativo = 'Sim', data_cad = curDate(),
     data_pgto = '$data_pgto', valor = :valor WHERE id = '$id' ");
-
-   // $query2 = $pdo->prepare ("UPDATE usuarios SET nome = :nome, cpf = :cpf,
-   // email = :email, telefone =: telefone WHERE empresa = :id_empresa and nivel = 'Administrador' ");
 }
+
 $query->bindValue(":nome_resp", $nome_resp);
 $query->bindValue(":email", $email);
 $query->bindValue(":telefone", $telefone);

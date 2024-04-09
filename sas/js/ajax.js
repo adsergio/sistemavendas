@@ -60,3 +60,45 @@ $("#form").submit(function () {
     });
 
 });
+
+function excluir(id){
+    var id_usuario = localStorage.id_usu;
+    $.ajax({
+        url: 'paginas/' + pag + "/excluir.php",
+        method: 'POST',
+        data: {id,id_usuario},
+        dataType: "html",
+
+        success:function(mensagem){
+            if (mensagem.trim() == "Excluído com Sucesso") {
+                listar();                       
+
+            } else {
+
+                $('#mensagem-excluir').addClass('text-danger')
+                $('#mensagem-excluir').text(mensagem)
+            }
+        }
+    });
+}
+
+function ativar(id, acao){
+    var id_usuario = localStorage.id_usu;
+    $.ajax({
+        url: 'paginas/' + pag + "/mudar-status.php",
+        method: 'POST',
+        data: {id,id_usuario, acao},
+        dataType: "html",
+
+        success:function(mensagem){
+            if (mensagem.trim() == "Alterado com Sucesso") {
+                listar();                       
+
+            } else {
+
+                $('#mensagem-excluir').addClass('text-danger')
+                $('#mensagem-excluir').text(mensagem)
+            }
+        }
+    });
+}

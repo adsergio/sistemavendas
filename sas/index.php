@@ -824,8 +824,12 @@ require_once("verificar.php");
 				$('#senha_perfil').val(split[6]);
 				$('#endereco_perfil').val(split[7]);
 				$('#id_perfil').val(id_usu);
+				
+				//alert (split[8]);
+				if(split[8] != 'Sim'){
+				window.location="../index.php";
 
-
+				}
 			},
 
 		});
