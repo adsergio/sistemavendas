@@ -135,14 +135,13 @@ HTML;
 
     </script>
 <script type="text/javascript">
-	function mostrar(nome, email, telefone, cpf, data_cad, endereco, ativo){
+	function mostrar(nome, email, telefone, cpf, data, endereco, ativo){
 	
 		$('#titulo_dados').text(nome);
         $('#email_dados').text(email);
         $('#telefone_dados').text(telefone);
         $('#cpf_dados').text(cpf);
-        $('#valor_dados').text(valor);
-        $('#data_cad_dados').text(data_cad);
+        $('#data_cad_dados').text(data);
         $('#endereco_dados').text(endereco);
         $('#ativo_dados').text(ativo);
        
