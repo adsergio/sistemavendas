@@ -32,17 +32,24 @@ for($i=0; $i < $total_reg; $i++){
         $telefone = $res[$i]['telefone'];
         $email = $res[$i]['email'];
         $cpf = $res[$i]['cpf'];
-        $cnpj = $res[$i]['nivel'];
+        $nivel = $res[$i]['nivel'];
         $ativo = $res[$i]['ativo'];
         $endereco = $res[$i]['endereco'];
-        $nivel = $res[$i]['nivel'];
         $data = $res[$i]['data'];
+        $senha = $res[$i]['senha'];
 
 
         //Formatação de campos
 
 $dataF = implode('/', array_reverse(explode('-', $data)));
 $whats = '55'.preg_replace('/[ ()-]+/' , '' , $telefone);
+
+
+if($nivel == 'SAS'){
+    $senha = '***********';
+
+}
+
 
 
 if($ativo == 'Sim'){
@@ -81,8 +88,8 @@ echo <<<HTML
 		</li>										
 		</ul>
 		</li>
-        <big><a href="#" onclick="mostrar('{$nome}','{$email}','{$telefone}','{$cpf}',
-       '{$ativo}','{$dataF}','{$endereco}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary"></i></a></big>
+        <big><a href="#" onclick="mostrar('{$nome}','{$email}','{$telefone}','{$senha}','{$cpf}',
+       '{$ativo}','{$dataF}','{$endereco}','{$nivel}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary"></i></a></big>
 
         <big><a href="#" onclick="ativar('{$id}', '{$acao}')" title="{$titulo_link}"><i class="fa {$icone} text-success"></i></a></big>
 
@@ -101,7 +108,7 @@ echo <<<HTML
 HTML;
 
 } else {
-    echo '<small>Não POssui Registros Cadastrados!!</small>';
+    echo '<small>Não Possui Registros Cadastrados!!</small>';
 }
 ?>
 
@@ -135,15 +142,19 @@ HTML;
 
     </script>
 <script type="text/javascript">
-	function mostrar(nome, email, telefone, cpf, data, endereco, ativo){
+	function mostrar(nome, email, telefone, senha, cpf, ativo, data, endereco, nivel){
 	
 		$('#titulo_dados').text(nome);
         $('#email_dados').text(email);
         $('#telefone_dados').text(telefone);
+        $('#senha_dados').text(senha);
         $('#cpf_dados').text(cpf);
-        $('#data_cad_dados').text(data);
-        $('#endereco_dados').text(endereco);
         $('#ativo_dados').text(ativo);
+        $('#data_dados').text(data);   
+        
+        $('#nivel_dados').text(nivel);
+        $('#endereco_dados').text(endereco);
+      
        
 		
 			
@@ -154,7 +165,6 @@ HTML;
 	function limparCampos(){
 		$('#id').val('');
 		$('#nome').val('');	
-        $('#nome').val('');
         $('#email').val('');
         $('#telefone').val('');
         $('#cpf').val('');

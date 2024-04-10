@@ -93,36 +93,37 @@ $pag = 'usuarios';
 
 					<div class="class="row" style="margin-top: -20px">
 					
-						<div class="col-md-8">
+						<div class="col-md-6">
 							<span><b>Email: </b></span><span id="email_dados"></span>
 						</div>
 
-						<div class="col-md-4">
+						<div class="col-md-6">
+							<span><b>Telefone: </b></span><span id="telefone_dados"></span>
+						</div>
+
+						<div class="col-md-6">
 							<span><b>Senha: </b></span><span id="senha_dados"></span>
 						</div>
 
 						<div class="col-md-6">
 							<span><b>Nível: </b></span><span id="nivel_dados"></span>
 						</div>
-						<hr>
-
-						<div class="col-md-6">
-							<span><b>Telefone: </b></span><span id="telefone_dados"></span>
-						</div>
-						<hr>
+								
+						
 						<div class="col-md-6">
 						 	<span><b>CPF: </b></span><span id="cpf_dados"></span>
 						</div>	
-
-						
 						<hr>
+						<div class="col-md-6">
+							<span><b>Data de Cadastro: </b></span><span id="data_dados"></span>
+						</div>
+						<hr>
+						
 						<div class="col-md-6">
 							<span><b>Ativo: </b></span><span id="ativo_dados"></span>
 						</div>
 
-						<div class="col-md-6">
-							<span><b>Data de Cadastro: </b></span><span id="data_cad_dados"></span>
-						</div>
+						
 						<hr>
 						<div class="col-md-12">
 							<span><b>Endereço: </b></span><span id="endereco_dados"></span>
