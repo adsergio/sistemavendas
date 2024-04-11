@@ -121,12 +121,12 @@ $pag = 'empresas';
 					<div class="row">
 						<div class="col-md-6">
 							<label>Foto</label>
-							<input type="file" class="form-control" id="foto_perfil" name="foto" value="<?php echo $foto_usuario ?>" onChange="carregarImgPerfil()">
+							<input type="file" class="form-control" id="foto" name="foto" value="" onChange="carregarImg()">
 
 						</div>
 
 						<div class="col-md-6">
-							<img src="images/perfil/<?php echo $foto_usuario ?>" width="80px" id="target-usu">
+							<img src="" width="80px" id="target">
 
 						</div>
 
@@ -225,3 +225,59 @@ $pag = 'empresas';
 	var pag = "<?= $pag ?>"
 </script>
 <script src="js/ajax.js"></script>
+
+
+
+
+
+<script type="text/javascript">
+			function carregarImg() {
+				var target = document.getElementById('target');
+				var file = document.querySelector("#foto").files[0];
+
+				var arquivo = file['name'];
+				resultado = arquivo.split(".", 2);
+
+				if(resultado[1] === 'pdf'){
+					$('#target').attr('src', "images/pdf.png");
+					return;
+				}
+
+				if(resultado[1] === 'rar' || resultado[1] === 'zip'){
+					$('#target').attr('src', "images/rar.png");
+					return;
+				}
+
+				if(resultado[1] === 'doc' || resultado[1] === 'docx' || resultado[1] === 'txt'){
+					$('#target').attr('src', "images/word.png");
+					return;
+				}
+
+
+				if(resultado[1] === 'xlsx' || resultado[1] === 'xlsm' || resultado[1] === 'xls'){
+					$('#target').attr('src', "images/excel.png");
+					return;
+				}
+
+
+				if(resultado[1] === 'xml'){
+					$('#target').attr('src', "images/xml.png");
+					return;
+				}
+
+
+
+				var reader = new FileReader();
+
+				reader.onloadend = function () {
+					target.src = reader.result;
+				};
+
+				if (file) {
+					reader.readAsDataURL(file);
+
+				} else {
+					target.src = "";
+				}
+			}
+		</script>

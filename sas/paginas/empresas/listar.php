@@ -123,6 +123,7 @@ HTML;
 
 );
 </script>
+
 <script type="text/javascript">
 	function editar(id, nome, email, telefone, cpf, cnpj,valor,data_pgto,endereco){
 		$('#id').val(id);
@@ -141,13 +142,12 @@ HTML;
 		$('#modalForm').modal('show');
 		
 	}
-//Mostrar campos
-//'{$nome}','{$email}','{$telefone}','{$cpf}',
-//'{$cnpj}','{$valorF}','{$data_pgtoF}','{$endereco}', '{$ativo}', '{$data_cadF}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary"></i></a></big>
 
 
-    </script>
-<script type="text/javascript">
+
+</script>
+    
+    <script type="text/javascript">
 	function mostrar(nome, email, telefone, cpf, cnpj,valor,data_pgto,ativo,data_cad, endereco){
 	
 		$('#titulo_dados').text(nome);
@@ -179,11 +179,13 @@ HTML;
         $('#endereco').val('');
 	}
 
+    
     function arquivo(id, nome){
 	
     $('#titulo_arquivo').text(nome);
     $('#id_arquivo').val(id);
-   // listarArquivos(id);
+    $('#target').attr("src","images/arquivos/sem-foto.png");
+    //listarArquivos(id);
     
         
     $('#modalArquivos').modal('show');
