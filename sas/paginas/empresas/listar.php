@@ -85,13 +85,16 @@ echo <<<HTML
 		</li>										
 		</ul>
 		</li>
-        <big><a href="#" onclick="mostrar('{$nome}','{$email}','{$telefone}','{$cpf}',
-        '{$cnpj}','{$valorF}','{$data_pgtoF}','{$ativo}','{$data_cadF}','{$endereco}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary"></i></a></big>
+
+        <big><a href="#" onclick="mostrar('{$nome}','{$email}','{$telefone}','{$cpf}','{$cnpj}','{$valorF}','{$data_pgtoF}','{$ativo}',
+            '{$data_cadF}','{$endereco}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary"></i></a></big>
 
         <big><a href="#" onclick="ativar('{$id}', '{$acao}')" title="{$titulo_link}"><i class="fa {$icone} text-success"></i></a></big>
 
         <big><a href="http://api.whatsapp.com/send?1=pt_BR&phone=$whats&text=" target="_blank" title="Abrir Whatsapp" class="text-verde"><i class="fa fa-whatsapp text-verde"></i></a></big>
 
+        <big><a href="#" onclick="arquivo('{$id}','{$nome}')" title="Anexar Arquivo"><i class="fa fa-file-archive-o text-primary"></i></a></big>
+        
 </td>    
 </tr>
 HTML;
@@ -175,5 +178,16 @@ HTML;
         $('#data_pgto').val('');
         $('#endereco').val('');
 	}
+
+    function marquivo(id,nome){
+	
+    $('#titulo_arquivo').text(nome);
+    $('#id_arquivo').val(id);
+    listarArquivos(id);
+    
+        
+    $('#modalArquivo').modal('show');
+    
+}
 
 </script>
