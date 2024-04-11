@@ -93,6 +93,66 @@ $pag = 'empresas';
 	</div>
 </div>
 
+<!-- Modal Arquivos -->
+<div class="modal fade" id="modalArquivos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel"><span id="titulo_arquivo"></span></h4>
+				<button id="btn-fechar" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="form">
+				<div class="modal-body">
+
+				<div class="row">
+						<div class="col-md-6">
+							<label>Nome</label>
+							<input type="text" class="form-control" id="nome" name="nome_arquivo" placeholder="Nome do arquivo" required>
+						</div>
+
+						<div class="col-md-6">
+							<label>Data Validade</label>
+							<input type="date" class="form-control" id="data_validade" name="data_validade" placeholder="">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<label>Foto</label>
+							<input type="file" class="form-control" id="foto_perfil" name="foto" value="<?php echo $foto_usuario ?>" onChange="carregarImgPerfil()">
+
+						</div>
+
+						<div class="col-md-6">
+							<img src="images/perfil/<?php echo $foto_usuario ?>" width="80px" id="target-usu">
+
+						</div>
+
+
+					</div>
+					
+
+
+					<input type="hidden" name="id" id="id">
+
+
+					<br>
+					<small>
+						<small>
+							<div id="mensagem" align="center"></div>
+						</small>
+					</small>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <!-- Modal Mostrar Dados -->
 <div class="modal fade" id="modalDados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog">

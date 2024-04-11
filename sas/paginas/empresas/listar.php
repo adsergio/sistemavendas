@@ -93,7 +93,7 @@ echo <<<HTML
 
         <big><a href="http://api.whatsapp.com/send?1=pt_BR&phone=$whats&text=" target="_blank" title="Abrir Whatsapp" class="text-verde"><i class="fa fa-whatsapp text-verde"></i></a></big>
 
-        <big><a href="#" onclick="arquivo('{$id}','{$nome}')" title="Anexar Arquivo"><i class="fa fa-file-archive-o text-primary"></i></a></big>
+        <big><a href="#" onclick="arquivo('{$id}','{$nome}' )" title="Anexar Arquivo"><i class="fa fa-file-archive-o text-primary"></i></a></big>
         
 </td>    
 </tr>
@@ -179,14 +179,14 @@ HTML;
         $('#endereco').val('');
 	}
 
-    function marquivo(id,nome){
+    function arquivo(id, nome){
 	
     $('#titulo_arquivo').text(nome);
     $('#id_arquivo').val(id);
-    listarArquivos(id);
+   // listarArquivos(id);
     
         
-    $('#modalArquivo').modal('show');
+    $('#modalArquivos').modal('show');
     
 }
 
