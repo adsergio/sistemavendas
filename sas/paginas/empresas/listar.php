@@ -181,9 +181,10 @@ HTML;
 
     
     function arquivo(id, nome){
-	
+    
     $('#titulo_arquivo').text(nome);
     $('#id_arquivo').val(id);
+    $('#id_usuario_arquivo').val(localStorage.id_usu);
     $('#target').attr("src","images/arquivos/sem-foto.png");
     //listarArquivos(id);
     
