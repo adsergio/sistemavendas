@@ -34,5 +34,8 @@ data_cad = curDate(), data_validade = '$data_validade', foto = '$foto', id_ref =
 $query->bindValue(":nome", "$nome");	
 $query->execute();
 
+echo 'Salvo com Sucesso';
+
+
 
 

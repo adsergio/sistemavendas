@@ -124,7 +124,7 @@ $pag = 'empresas';
 							<input type="file" class="form-control" id="foto" name="foto" value="" onChange="carregarImg()">
 
 						</div>
-
+						
 						<div class="col-md-6">
 							<img src="" width="80px" id="target">
 
@@ -132,17 +132,21 @@ $pag = 'empresas';
 
 
 					</div>
-
+					
 					<input type="hidden" name="id_usuario" id="id_usuario_arquivo">
 					<input type="hidden" name="id_arquivo" id="id_arquivo">
-
+					
+					
 
 					<br>
 					<small>
-						<small>
 							<div id="mensagem-arquivo" align="center"></div>
-						</small>
 					</small>
+
+					<hr>
+					<label>listar-arquivos</label>
+					<div id="listar-arquivos"></div>
+
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">Salvar</button>
@@ -283,7 +287,8 @@ $pag = 'empresas';
 
 <script type="text/javascript">
 	$("#form-arquivos").submit(function() {
-
+		
+		var id_empresa = $('#id_arquivo').val();
 		event.preventDefault();
 		var formData = new FormData(this);
 
@@ -298,7 +303,7 @@ $pag = 'empresas';
 				if (mensagem.trim() == "Salvo com Sucesso") {
 
 					$('#btn-fechar-arquivo').click();
-					listar();
+					listarArquivos(id_empresa);
 
 				} else {
 
@@ -316,4 +321,24 @@ $pag = 'empresas';
 		});
 
 	});
+</script>
+
+
+<script type="text/javascript">
+
+function listarArquivos(id){
+    var id_usuario = localStorage.id_usu;
+    $.ajax({
+        url: 'paginas/' + pag + "/listar-aquivos.php",
+        method: 'POST',
+        data: {id_usuario, id},
+        dataType: "html",
+
+        success:function(result){
+            $("#listar-arquivos").html(result);
+            
+        }
+    });
+}
+
 </script>

@@ -186,10 +186,8 @@ HTML;
     $('#id_arquivo').val(id);
     $('#id_usuario_arquivo').val(localStorage.id_usu);
     $('#target').attr("src","images/arquivos/sem-foto.png");
-    //listarArquivos(id);
-    
-        
     $('#modalArquivos').modal('show');
+    listarArquivos(id);
     
 }
 
