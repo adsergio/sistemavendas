@@ -35,7 +35,7 @@ for($i=0; $i < $total_reg; $i++){
 
      
 echo <<<HTML
-<
+
 <tr>
 <td>{$nome}</td>
 <td class="esc">{$dias}</td>

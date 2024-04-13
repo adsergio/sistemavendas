@@ -1,13 +1,27 @@
+<?php
+
+//Tolizar as empresas
+$query = $pdo->query("SELECT * FROM empresas WHERE ativo = 'Sim' ");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$total_empresas = count($res);
+
+
+?>
+
 <div class="main-page">
 	<div class="col_3">
+		<a href="index.php?pagina=empresas">
 		<div class="col-md-3 widget widget1">
 			<div class="r3_counter_box">
-				<i class="pull-left fa fa-dollar icon-rounded"></i>
+				<i class="pull-left fa fa-users icon-rounded"></i>
 				<div class="stats">
-					<h5><strong>$452</strong></h5>
-					<span>Total Revenue</span>
+					<h5><strong><big><big><?php echo $total_empresas ?></big></big></strong></h5>
 				</div>
+				<hr style="margin-top:10px">
+				<span style="color:#6d6d6e" !importamt>Clientes Ativos</span>
 			</div>
+			</a>
+			
 		</div>
 		<div class="col-md-3 widget widget1">
 			<div class="r3_counter_box">

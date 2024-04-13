@@ -35,10 +35,10 @@ echo $id_usuario;
 	<title><?php echo $nome_sistema ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	
+
 	<!-- -->
-	<link rel="shortcut icon" href="../img/icone.png" type="image/x-icon">  
-	
+	<link rel="shortcut icon" href="../img/icone.png" type="image/x-icon">
+
 
 	<script type="application/x-javascript">
 		addEventListener("load", function() {
@@ -129,7 +129,7 @@ echo $id_usuario;
 	<!-- //pie-chart --><!-- index page sales reviews visitors pie chart -->
 
 	<!-- //Datatables--><!-- INICIO -->
-	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/> 
+	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css" />
 	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
 
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -138,28 +138,28 @@ echo $id_usuario;
 	<style type="text/css">
 		.select2-selection__rendered {
 			line-height: 36px !important;
-			font-size:16px !important;
-			color:#666666 !important;
+			font-size: 16px !important;
+			color: #666666 !important;
 
 		}
 
 		.select2-selection {
 			height: 36px !important;
-			font-size:16px !important;
-			color:#666666 !important;
+			font-size: 16px !important;
+			color: #666666 !important;
 
 		}
 	</style>
-	<!-- //Datatables--><!-- FIM -->  
-<?php
-require_once("verificar.php");
-?>
+	<!-- //Datatables--><!-- FIM -->
+	<?php
+	require_once("verificar.php");
+	?>
 
 </head>
 
 <body class="cbp-spmenu-push">
 	<!-- //style="display:none" -->
-	<div class="main-content id="conteudo-principal">
+	<div class="main-content id=" conteudo-principal">
 		<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
 			<!--left-fixed -navigation-->
 			<aside class="sidebar-left" style="overflow: scroll; height:100%; scrollbar-width: thin;">
@@ -181,6 +181,7 @@ require_once("verificar.php");
 									<i class="fa fa-dashboard"></i> <span>Home</span>
 								</a>
 							</li>
+							
 							<li class="treeview">
 								<a href="#">
 									<i class="fa fa-users"></i>
@@ -205,9 +206,32 @@ require_once("verificar.php");
 								</a>
 								<ul class="treeview-menu">
 									<li><a href="index.php?pagina=frequencias"><i class="fa fa-angle-right"></i> Frequências</a></li>
-
-								
+								</ul>
 							</li>
+
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-money"></i>
+									<span>Financeiro</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+								<li><a href="index.php?pagina="><i class="fa fa-angle-right"></i> Proximo Módulo</a></li>
+								</ul>
+							</li>
+
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-file-o"></i>
+									<span>Relatórios</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+								<li><a href="index.php"><i class="fa fa-angle-right"></i> Relatório de Empresas</a></li>
+								</ul>
+							</li>
+
+
 
 						</ul>
 					</div>
@@ -836,10 +860,10 @@ require_once("verificar.php");
 				$('#senha_perfil').val(split[6]);
 				$('#endereco_perfil').val(split[7]);
 				$('#id_perfil').val(id_usu);
-				
+
 				//alert (split[8]);
-				if(split[8] != 'Sim'){
-				window.location="../index.php";
+				if (split[8] != 'Sim') {
+					window.location = "../index.php";
 
 				}
 			},
