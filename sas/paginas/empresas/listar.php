@@ -188,7 +188,16 @@ HTML;
     $('#target').attr("src","images/arquivos/sem-foto.png");
     $('#modalArquivos').modal('show');
     listarArquivos(id);
+    limparArquivos()
     
+}
+
+function limparArquivos(){
+    $('#nome_arquivo').val('');
+    $('#data_validade').val('');
+    $('#foto').val('');
+    $('#target').attr("src","images/arquivos/sem-foto.png");
+
 }
 
 </script>

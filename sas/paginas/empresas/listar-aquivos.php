@@ -2,6 +2,7 @@
 require_once("../../../conexao.php");
 $tabela = 'arquivos';
 $id_empresa = $_POST['id'];
+$data_hoje = date('Y-m-d');
 
 $query = $pdo->query("SELECT * FROM $tabela WHERE empresa = '0' and tipo = 'Empresa' and id_ref = '$id_empresa' order by id desc");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -9,13 +10,14 @@ $total_reg = @count($res);
 if ($total_reg > 0) {
 
 echo <<<HTML
-<small>
+<small><small>
 	<table class="table table-hover">
 	<thead> 
 	<tr> 
 	<th >Nome</th>
     <th class="esc">Cadastrado</th>	
-    <th class="esc">Validade</th>		
+    <th class="esc">Validade</th>
+    <th class="">Arquivo</th>		
 	<th>Excluir</th>
     
 	</tr> 
@@ -24,26 +26,52 @@ echo <<<HTML
 HTML;
 
 
-for($i=0; $i < $total_reg; $i++){
-		$id = $res[$i]['id'];
-		$nome = $res[$i]['nome'];
+    for ($i = 0; $i < $total_reg; $i++) {
+        $id = $res[$i]['id'];
+        $nome = $res[$i]['nome'];
         $data_validade = $res[$i]['data_validade'];
-        $data_validade = implode('/', array_reverse(explode('-', $data_validade)));
+        $data_validadeF = implode('/', array_reverse(explode('-', $data_validade)));
         $data_cad = $res[$i]['data_cad'];
-        $data_cad = implode('/', array_reverse(explode('-', $data_cad)));
+        $data_cadF = implode('/', array_reverse(explode('-', $data_cad)));
+        $arquivo = $res[$i]['foto'];
+
+        $classe_data = '';    
+        if(strtotime($data_validade) < strtotime($data_hoje)) {
+            if($data_validadeF != '00/00/0000'){
+                $classe_data = 'text-danger';
+
+           }
+                   
+        }
         
 
+        //extensão do arquivo
+$ext = pathinfo($arquivo, PATHINFO_EXTENSION);
+if($ext == 'pdf'){
+	$tumb_arquivo = 'pdf.png';
+}else if($ext == 'rar' || $ext == 'zip'){
+	$tumb_arquivo = 'rar.png';
+}else if($ext == 'doc' || $ext == 'docx' || $ext == 'txt'){
+	$tumb_arquivo = 'word.png';
+}else if($ext == 'xlsx' || $ext == 'xlsm' || $ext == 'xls'){
+	$tumb_arquivo = 'excel.png';
+}else if($ext == 'xml'){
+	$tumb_arquivo = 'xml.png';
+}else{
+	$tumb_arquivo = $arquivo;
+}
 
-        //Formatação de campos
-
-
-     
+if ($data_validadeF == '00/00/0000'){
+    $data_validadeF = 'Sem Validade';
+    
+}
 echo <<<HTML
 
 <tr>
 <td>{$nome}</td>
-<td class="esc">{$data_cad}</td>
-<td class="esc">{$data_validade}</td>
+<td class="esc">{$data_cadF}</td>
+<td class="esc {$classe_data}">{$data_validadeF}</td>
+<td class="esc"><a href="images/arquivos/{$arquivo}" target="_blanck"><img src="images/arquivos/{$tumb_arquivo}" width="30px"></a></td>
 
 <td>
     
@@ -58,7 +86,7 @@ echo <<<HTML
 		</div>
 		</li>										
 		</ul>
-		</li>
+</li>
         
 
 </td>    
@@ -70,9 +98,9 @@ echo <<<HTML
 </tbody>
 
 </table>
-</small>
-HTML;
+</small></small>
 
+HTML;
 } else {
     echo '<small>Não Possui arquivo cadastrado!!</small>';
 }

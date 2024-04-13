@@ -144,7 +144,7 @@ $pag = 'empresas';
 					</small>
 
 					<hr>
-					<label>listar-arquivos</label>
+					
 					<div id="listar-arquivos"></div>
 
 				</div>
@@ -302,7 +302,8 @@ $pag = 'empresas';
 				$('#mensagem-arquivo').removeClass()
 				if (mensagem.trim() == "Salvo com Sucesso") {
 
-					$('#btn-fechar-arquivo').click();
+					limparArquivos()
+					//$('#btn-fechar-arquivo').click();
 					listarArquivos(id_empresa);
 
 				} else {
@@ -337,6 +338,27 @@ function listarArquivos(id){
         success:function(result){
             $("#listar-arquivos").html(result);
             
+        }
+    });
+}
+
+function excluirArquivo(id){
+    var id_usuario = localStorage.id_usu;
+	var id_empresa = $('#id_arquivo').val();
+    $.ajax({
+        url: 'paginas/' + pag + "/excluir-arquivo.php",
+        method: 'POST',
+        data: {id,id_usuario},
+        dataType: "html",
+
+        success:function(mensagem){
+            if (mensagem.trim() == "Excluído com Sucesso") {
+                listarArquivos(id_empresa);                       
+
+            } else {
+
+               
+            }
         }
     });
 }
