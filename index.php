@@ -32,12 +32,12 @@ if ($total_reg == 0) {
 ?>
 
 <!DOCTYPE html>
-<html lang="pt_br">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema SAS</title>
+  <title><?php echo $nome_sistema ?></title>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -52,7 +52,8 @@ if ($total_reg == 0) {
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css\login.css">
   <link rel="stylesheet" type="text/css" href="css\login.css" />
-  <link rel="icon" type="image/png" href="img/icone.png">
+ <link rel="shortcut icon" href="../img/icone.png" type="image/x-icon">
+
 
   </header>
 

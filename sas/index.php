@@ -227,7 +227,7 @@ echo $id_usuario;
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-								<li><a href="index.php"><i class="fa fa-angle-right"></i> Relatório de Empresas</a></li>
+								<li><a href="../rel/empresas_class.php" target="_blank"><i class="fa fa-angle-right"></i> Relatório de Empresas</a></li>
 								</ul>
 							</li>
 
@@ -535,7 +535,7 @@ echo $id_usuario;
 					<div class="row">
 						<div class="col-md-3">
 							<label>Nome do Sistema</label>
-							<input type="text" class="form-control" id="nome_sistema" name="nome_sistema" placeholder="" value="<?php echo @$nome_sistema ?>" required>
+							<input type="text" class="form-control" id="nome_sistema" name="nome_sistema" placeholder="" value="<?php echo $nome_sistema ?>" required>
 						</div>
 
 						<div class="col-md-3">

@@ -57,7 +57,7 @@ if($ativo == 'Sim'){
     $icone = 'fa-square-o';
     $titulo_link = 'Ativar Item';
     $acao = 'Sim';
-    $classe_ativo = 'dbdbdb';
+    $classe_ativo = '#dbdbdb';
 }
 
      
@@ -108,7 +108,7 @@ echo <<<HTML
 HTML;
 
 } else {
-    echo '<small>Não POssui Registros Cadastrados!!</small>';
+    echo '<small>Não Possui Registros Cadastrados!!</small>';
 }
 ?>
 
