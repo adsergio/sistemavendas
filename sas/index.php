@@ -37,6 +37,7 @@ echo $id_usuario;
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	<!-- -->
+	
 	<link rel="shortcut icon" href="../img/icone.png" type="image/x-icon">
 
 
@@ -216,7 +217,7 @@ echo $id_usuario;
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-								<li><a href="index.php?pagina="><i class="fa fa-angle-right"></i> Proximo Módulo</a></li>
+								<li><a href="index.php?pagina=receber"><i class="fa fa-angle-right"></i> Contas á Receber</a></li>
 								</ul>
 							</li>
 
@@ -577,7 +578,7 @@ echo $id_usuario;
 							<select class="form-control" name="tipo_rel">
 								<option value="PDF" <?php if (@$tipo_rel == 'PDF') { ?> selected <?php } ?>>PDF</option>
 								<option value="HTML" <?php if (@$tipo_rel == 'HTML') { ?> selected <?php } ?>>HTML</option>
-								<option value="XTML" <?php if (@$tipo_rel == 'XTML') { ?> selected <?php } ?>>XTML</option>
+								
 							</select>
 						</div>
 

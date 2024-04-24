@@ -29,6 +29,10 @@ if ($total_reg == 0) {
   
 }
 
+$query = $pdo->query("SELECT * FROM config WHERE empresa = 0");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$nome_sistema = $res[0]['nome_sistema'];
+
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +56,7 @@ if ($total_reg == 0) {
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css\login.css">
   <link rel="stylesheet" type="text/css" href="css\login.css" />
- <link rel="shortcut icon" href="../img/icone.png" type="image/x-icon">
+ <link rel="shortcut icon" href="img/icone.png" type="image/x-icon">
 
 
   </header>
