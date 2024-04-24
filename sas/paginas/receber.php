@@ -1,8 +1,73 @@
 <?php
 $pag = 'receber';
+$data_hoje = date('Y-m-d');
+$data_ontem = date('Y-m-d', strtotime("-1 days",strtotime($data_hoje)));
+$data_amanha = date('Y-m-d', strtotime("+1 days",strtotime($data_hoje)));
+
+$mes_atual = Date('m');
+$ano_atual = Date('Y');
+$data_inicio_mes = $ano_atual."-".$mes_atual."-01";
+
+if($mes_atual == '4' || $mes_atual == '6' || $mes_atual == '9' || $mes_atual == '11'){
+    $dia_final_mes = '30';
+}else if($mes_atual == '2'){
+    $dia_final_mes = '28';
+}else{
+    $dia_final_mes = '31';
+}
+
+$data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
 ?>
 
-<a class="btn btn-primary" onclick="inserir()" class="btn btn-primary btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i> Nova Conta</a>
+
+
+
+<div class="row">
+	<div class="col-md-12">
+		
+		<div style="float:left; margin-right:35px">
+		<a class="btn btn-primary" onclick="inserir()" class="btn btn-primary btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i> Nova Conta</a>
+		</div>
+
+		<div class="esc" style="float:left; margin-right:10px"><span><small><i title="Data de Vencimento Inicial" class="fa fa-calendar-o"></i></small></span></div>
+		<div class="esc" style="float:left; margin-right:20px">
+			<input type="date" class="form-control " name="data-inicial"  id="data-inicial" value="<?php echo date('Y-m-d') ?>" required>
+		</div>
+
+		<div class="esc" style="float:left; margin-right:10px"><span><small><i title="Data de Vencimento Final" class="fa fa-calendar-o"></i></small></span></div>
+		<div class="esc" style="float:left; margin-right:30px">
+			<input type="date" class="form-control " name="data-final"  id="data-final" value="<?php echo date('Y-m-d') ?>" required>
+		</div>
+
+
+		<div class="esc" style="float:left; margin-right:10px"><span><small><i title="Filtrar por Status" class="bi bi-search"></i></small></span></div>
+		<div class="esc" style="float:left; margin-right:20px">
+			<select class="form-control" aria-label="Default select example" name="status-busca" id="status-busca">
+				<option value="">Pendentes / Pagas</option>
+				<option value="Não">Pendentes</option>
+				<option value="Sim">Pagas</option>
+				<option value="Sim">Mês</option>
+				
+			</select>
+		</div>
+
+		<div style="margin-top:5px;"> 
+		<small >
+			<a title="Contas à Receber Vencidas" class="text-muted" href="#" onclick="listarContasVencidas('Vencidas')"><span>Vencidas</span></a> / 
+			<a title="Contas à Receber Hoje" class="text-muted" href="#" onclick="alterarData('<?php echo $data_hoje?>', '<?php echo $data_hoje?>')"><span>Hoje</span></a> / 
+			<a title="Contas à Receber Amanhã" class="text-muted" href="#" onclick="alterarData('<?php echo $data_amanha?>', '<?php echo $data_amanha?>')"><span>Amanhã</span></a> / 
+			<a title="Contas à Receber Mês" class="text-muted" href="#" onclick="alterarData('<?php echo $data_inicio_mes?>', '<?php echo $data_final_mes?>')"><span>Mês</span></a>
+			
+		</small>
+		</div>
+
+		
+	</div>
+
+	
+</div>
+
+
 
 <div class="bs-example widget-shadow" style="padding:15px" id="listar">
 </div>
@@ -21,14 +86,14 @@ $pag = 'receber';
 				<div class="modal-body">
 
 					<div class="row">
-						<div class="col-md-4">						
+						<div class="col-md-6">						
 							<div class="form-group"> 
 								<label>Descrição</label> 
 								<input type="text" class="form-control" name="descricao" id="descricao"> 
 							</div>						
 						</div>
 
-						<div class="col-md-4">						
+						<div class="col-md-6">						
 							<div class="form-group"> 
 								<label>Empresa</label> 
 								<select class="form-control sel2" name="pessoa" id="pessoa" style="width:100%;"> 
@@ -51,18 +116,19 @@ $pag = 'receber';
 						</div>
 
 
-						<div class="col-md-4">						
-							<div class="form-group"> 
-								<label>Valor</label> 
-								<input type="text" class="form-control" name="valor" id="valor" required> 
-							</div>						
-						</div>
+						
 
 
 					</div>
 
 
 					<div class="row">
+					<div class="col-md-4">						
+							<div class="form-group"> 
+								<label>Valor</label> 
+								<input type="text" class="form-control" name="valor" id="valor" required> 
+							</div>						
+						</div>
 						<div class="col-md-4">						
 							<div class="form-group"> 
 								<label>Vencimento</label> 
@@ -73,7 +139,7 @@ $pag = 'receber';
 						<div class="col-md-4">						
 							<div class="form-group"> 
 								<label>Frequência</label> 
-								<select class="form-control sel2" name="frequencia" id="frequencia" required style="width:100%;"> 
+								<select class="form-control" name="frequencia" id="frequencia" required style="width:100%;"> 
 									<?php 
 									$query = $pdo->query("SELECT * FROM frequencias WHERE empresa = '0' order by id asc");
 									$res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -98,13 +164,13 @@ $pag = 'receber';
 
 					<div class="row">						
 
-						<div class="col-md-4">						
+						<div class="col-md-7">						
 							<div class="form-group"> 
 								<label>Arquivo</label> 
-								<input type="file" name="arquivo" onChange="carregarImg();" id="arquivo">
+								<input type="file" class="form-control" name="arquivo" onChange="carregarImg();" id="arquivo">
 							</div>						
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-5">
 							<div id="divImg">
 								<img src="images/contas/sem-foto.png"  width="100px" id="target">									
 							</div>
@@ -406,4 +472,59 @@ function excluirArquivo(id){
     });
 }
 
+</script>
+
+<script type="text/javascript">
+function listar(){
+    var id_usuario = localStorage.id_usu;
+	var data_inicial = $("#data-inicial").val();
+	var data_final = $("#data-final").val();
+	var status = $("#status-busca").val();
+    $.ajax({
+        url: 'paginas/' + pag + "/listar.php",
+        method: 'POST',
+        data: {id_usuario, data_inicial, data_final, status},
+        dataType: "html",
+
+        success:function(result){
+            $("#listar").html(result);
+            $('#mensagem-excluir').text('');
+        }
+    });
+}
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.sel2').select2({
+		dropdownParent: $('#modalForm')
+	});
+});
+</script>
+
+
+
+<script type="text/javascript">
+	function listarContasVencidas(vencidas){
+			$.ajax({
+				url: 'paginas/' + pag + "/listar.php",
+				method: 'POST',
+				data: {vencidas},
+				dataType: "html",
+
+				success:function(result){
+					$("#listar").html(result);
+				}
+			});
+		}
+</script>
+
+<script type="text/javascript">
+	function alterarData(data1, data2){
+		$("#data-inicial").val(data1)
+		$("#data-final").val(data2)
+		lista();
+	}
 </script>
