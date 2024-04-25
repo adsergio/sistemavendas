@@ -20,6 +20,7 @@ function listar(){
 
 
 function inserir(){
+    $('#id_usuario').val(localStorage.id_usu);
     $('#mensagem').text('');
     $('#titulo_inserir').text('Inserir Registro');
     $('#modalForm').modal('show');

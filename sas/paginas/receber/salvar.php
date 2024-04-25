@@ -1,70 +1,90 @@
-<?php
+<?php 
+$tabela = 'receber';
 require_once("../../../conexao.php");
-$tabela = 'empresas';
-$nome_resp = $_POST["nome_resp"];
-$telefone = $_POST['telefone'];
-$email = $_POST["email"];
-$cpf = $_POST['cpf'];
-$cnpj = $_POST['cnpj'];
-$endereco = $_POST['endereco'];
+
+
+$descricao = $_POST['descricao'];
+$pessoa = $_POST['pessoa'];
 $valor = $_POST['valor'];
-$valor = str_replace(',', '.', $valor);
-$data_pgto = $_POST['data-pgto'];
+$data_venc = $_POST['data_venc'];
+$frequencia = $_POST['frequencia'];
+$id_usuario = $_POST['id_usuario'];
 $id = $_POST['id'];
-$senha = '123';
-$senha_crip = md5($senha);
 
-if ($email == "" and $cpf == "") {
-    echo "Preencha o Email ou CPF";
-    exit();
+
+if($descricao == "" and $pessoa == ""){
+	echo 'Escolha um Fornecedor ou insira uma descrição!';
+	exit();
 }
 
-//validar CNPJ
-if ($cnpj != "") {
 
-    $query = $pdo->query("SELECT * from $tabela where cnpj = '$cnpj'");
-    $res = $query->fetchAll(PDO::FETCH_ASSOC);
-    if (@count($res) > 0 and $id != $res[0]['id']) {
-        echo 'CNPJ já Cadastrado, escolha outro!!';
-        exit();
-    }
+if($descricao == "" and $pessoa != ""){
+	$query = $pdo->query("SELECT * FROM clientes where id = '$pessoa'");
+	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$nome_pessoa = $res[0]['nome'];
+	$descricao = $nome_pessoa;
 }
 
-if ($id == ""){
-    $query = $pdo->prepare("INSERT into $tabela SET nome_resp = :nome_resp, telefone = :telefone, 
-    email = :email,  cpf = :cpf, cnpj = :cnpj, endereco = :endereco ,ativo = 'Sim', data_cad = curDate(),
-    data_pgto = '$data_pgto', valor = :valor ");
-    
-  
-    
+
+$query = $pdo->query("SELECT * FROM $tabela where id = '$id'");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$total_reg = @count($res);
+if($total_reg > 0){
+	$foto = $res[0]['arquivo'];
 }else{
-    $query = $pdo->prepare("UPDATE $tabela SET nome_resp = :nome_resp, telefone = :telefone, 
-    email = :email,  cpf = :cpf, cnpj = :cnpj, endereco = :endereco ,ativo = 'Sim', data_cad = curDate(),
-    data_pgto = '$data_pgto', valor = :valor WHERE id = '$id' ");
+	$foto = 'sem-foto.png';
 }
 
-$query->bindValue(":nome_resp", $nome_resp);
-$query->bindValue(":email", $email);
-$query->bindValue(":telefone", $telefone);
-$query->bindValue(":cpf", $cpf);
-$query->bindValue(":cnpj", $cnpj);
-$query->bindValue(":endereco", $endereco);
-$query->bindValue(":valor", $valor);
-$query->execute();
-$id_empresa = $pdo->lastInsertId();
+//SCRIPT PARA SUBIR FOTO NO SERVIDOR
+$nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['arquivo']['name'];
+$nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
+$caminho = '../../images/contas/' .$nome_img;
+
+$imagem_temp = @$_FILES['arquivo']['tmp_name']; 
+
+if(@$_FILES['arquivo']['name'] != ""){
+	$ext = pathinfo($nome_img, PATHINFO_EXTENSION);   
+	if($ext == 'png' or $ext == 'jpg' or $ext == 'jpeg' or $ext == 'gif' or $ext == 'pdf' or $ext == 'rar' or $ext == 'zip' or $ext == 'doc' or $ext == 'docx'){ 
+
+		if (@$_FILES['arquivo']['name'] != ""){
+
+			//EXCLUO A FOTO ANTERIOR
+			if($foto != "sem-foto.png"){
+				@unlink('../../images/contas/'.$foto);
+			}
+
+			$foto = $nome_img;
+		}
+
+		move_uploaded_file($imagem_temp, $caminho);
+	}else{
+		echo 'Extensão de Imagem não permitida!';
+		exit();
+	}
+}
+
+
 
 if($id == ""){
-    $query = $pdo->prepare ("INSERT into usuarios SET empresa = '$id_empresa', nome = :nome, cpf = :cpf,
-    email = :email, telefone = :telefone, endereco = :endereco, senha = '$senha', senha_crip = '$senha_crip', ativo = 'Sim', foto = 'sem-foto.jpg', nivel = 'Administrador',
-    data = curDate() ");
-    $query->bindValue(":nome", $nome_resp);
-    $query->bindValue(":email", $email);
-    $query->bindValue(":telefone", $telefone);
-    $query->bindValue(":cpf", $cpf);
-    $query->bindValue(":endereco", $endereco);
-    $query->execute();
+	$query = $pdo->prepare("INSERT INTO $tabela SET empresa = '0', tipo = 'Empresa', descricao = :descricao, pessoa = '$pessoa',
+     valor = :valor, data_venc = '$data_venc', frequencia = '$frequencia',  data_lanc = curDate(), usuario_lanc = '$id_usuario', arquivo = '$foto', pago = 'Não'");
+	
+
+}else{
+	$query = $pdo->prepare("UPDATE $tabela SET descricao = :descricao, pessoa = '$pessoa', valor = :valor, data_venc = '$data_venc', 
+    frequencia = '$frequencia',  data_lanc = curDate(), usuario_lanc = '$id_usuario', arquivo = '$foto' where id = '$id'");
+	
+	
 }
 
-echo"Salvo com Sucesso";
+$query->bindValue(":descricao", "$descricao");
+$query->bindValue(":valor", "$valor");
+$query->execute();
+$ult_id = $pdo->lastInsertId();
 
+
+
+
+
+echo 'Salvo com Sucesso'; 
 

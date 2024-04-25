@@ -31,18 +31,18 @@ $data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
 
 		<div class="esc" style="float:left; margin-right:10px"><span><small><i title="Data de Vencimento Inicial" class="fa fa-calendar-o"></i></small></span></div>
 		<div class="esc" style="float:left; margin-right:20px">
-			<input type="date" class="form-control " name="data-inicial"  id="data-inicial" value="<?php echo date('Y-m-d') ?>" required>
+			<input type="date" class="form-control " name="data-inicial"  id="data-inicial" value="<?php echo $data_inicio_mes ?>" required onchange="listar()">
 		</div>
 
 		<div class="esc" style="float:left; margin-right:10px"><span><small><i title="Data de Vencimento Final" class="fa fa-calendar-o"></i></small></span></div>
 		<div class="esc" style="float:left; margin-right:30px">
-			<input type="date" class="form-control " name="data-final"  id="data-final" value="<?php echo date('Y-m-d') ?>" required>
+			<input type="date" class="form-control " name="data-final"  id="data-final" value="<?php echo $data_final_mes ?>" required onchange="listar()">
 		</div>
 
 
 		<div class="esc" style="float:left; margin-right:10px"><span><small><i title="Filtrar por Status" class="bi bi-search"></i></small></span></div>
 		<div class="esc" style="float:left; margin-right:20px">
-			<select class="form-control" aria-label="Default select example" name="status-busca" id="status-busca">
+			<select class="form-control" aria-label="Default select example" name="status-busca" id="status-busca" onchange="listar()">
 				<option value="">Pendentes / Pagas</option>
 				<option value="Não">Pendentes</option>
 				<option value="Sim">Pagas</option>
@@ -181,6 +181,7 @@ $data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
 
 					<br>
 					<input type="hidden" name="id" id="id"> 
+					<input type="hidden" name="id_usuario" id="id_usuario">
 					<small><div id="mensagem" align="center" class="mt-3"></div></small>					
 
 				</div>
@@ -230,19 +231,19 @@ $data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
 					<div class="row">
 						<div class="col-md-6">
 							<label>Foto</label>
-							<input type="file" class="form-control" id="foto" name="foto" value="" onChange="carregarImg()">
+							<input type="file" class="form-control" id="foto-arquivos" name="foto" value="" onChange="carregarImgArquivos()">
 
 						</div>
 						
 						<div class="col-md-6">
-							<img src="" width="80px" id="target">
+							<img src="" width="80px" id="target-arquivos">
 
 						</div>
 
 
 					</div>
 					
-					<input type="hidden" name="id_usuario" id="id_usuario_arquivo">
+					<input type="hidden" name="id_usuario" id="id_usuario_arquivos">
 					<input type="hidden" name="id_arquivo" id="id_arquivo">
 					
 					
@@ -345,7 +346,59 @@ $data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
 <script type="text/javascript">
 	function carregarImg() {
 		var target = document.getElementById('target');
-		var file = document.querySelector("#foto").files[0];
+		var file = document.querySelector("#arquivo").files[0];
+
+		var arquivo = file['name'];
+		resultado = arquivo.split(".", 2);
+
+		if (resultado[1] === 'pdf') {
+			$('#target').attr('src', "images/pdf.png");
+			return;
+		}
+
+		if (resultado[1] === 'rar' || resultado[1] === 'zip') {
+			$('#target').attr('src', "images/rar.png");
+			return;
+		}
+
+		if (resultado[1] === 'doc' || resultado[1] === 'docx' || resultado[1] === 'txt') {
+			$('#target').attr('src', "images/word.png");
+			return;
+		}
+
+
+		if (resultado[1] === 'xlsx' || resultado[1] === 'xlsm' || resultado[1] === 'xls') {
+			$('#target').attr('src', "images/excel.png");
+			return;
+		}
+
+
+		if (resultado[1] === 'xml') {
+			$('#target').attr('src', "images/xml.png");
+			return;
+		}
+
+
+
+		var reader = new FileReader();
+
+		reader.onloadend = function() {
+			target.src = reader.result;
+		};
+
+		if (file) {
+			reader.readAsDataURL(file);
+
+		} else {
+			target.src = "";
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	function carregarImgArquivos() {
+		var target = document.getElementById('target-arquivos');
+		var file = document.querySelector("#foto-arquivos").files[0];
 
 		var arquivo = file['name'];
 		resultado = arquivo.split(".", 2);
@@ -476,10 +529,13 @@ function excluirArquivo(id){
 
 <script type="text/javascript">
 function listar(){
+	
     var id_usuario = localStorage.id_usu;
 	var data_inicial = $("#data-inicial").val();
 	var data_final = $("#data-final").val();
 	var status = $("#status-busca").val();
+	//alert(data_inicial);
+	//alert(data_final);
     $.ajax({
         url: 'paginas/' + pag + "/listar.php",
         method: 'POST',
@@ -525,6 +581,6 @@ $(document).ready(function() {
 	function alterarData(data1, data2){
 		$("#data-inicial").val(data1)
 		$("#data-final").val(data2)
-		lista();
+		listar();
 	}
 </script>
