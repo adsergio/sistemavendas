@@ -1,10 +1,10 @@
 <?php
 require_once("../../../conexao.php");
 $tabela = 'arquivos';
-$id_empresa = $_POST['id'];
+$id_ref = $_POST['id'];
 $data_hoje = date('Y-m-d');
 
-$query = $pdo->query("SELECT * FROM $tabela WHERE empresa = '0' and tipo = 'Empresa' and id_ref = '$id_empresa' order by id desc");
+$query = $pdo->query("SELECT * FROM $tabela WHERE empresa = '0' and tipo = 'Receber' and id_ref = '$id_ref' order by id desc");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_reg = @count($res);
 if ($total_reg > 0) {

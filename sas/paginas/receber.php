@@ -266,64 +266,91 @@ $data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
 	</div>
 </div>
 
-<!-- Modal Mostrar Dados -->
-<div class="modal fade" id="modalDados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+
+
+<!-- ModalMostrar -->
+<div class="modal fade" id="modalMostrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="exampleModalLabel"><span id="titulo_dados"></span></h4>
-				<button id="btn-fechar-dados" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+				<h4 class="modal-title" id="tituloModal"><span id="nome_mostrar"> </span></h4>
+				<button id="btn-fechar-excluir" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
+			
+			<div class="modal-body">			
 
 
-			<div class="modal-body">
 
-				<div class="class=" row" style="margin-top: -20px">
-
-					<div class="col-md-6">
-						<span><b>Email: </b></span><span id="email_dados"></span>
+				<div class="row" style="border-bottom: 1px solid #cac7c7;">
+					<div class="col-md-6">							
+						<span><b>Cliente: </b></span>
+						<span id="pessoa_mostrar"></span>							
 					</div>
-
-					<div class="col-md-6">
-						<span><b>Telefone: </b></span><span id="telefone_dados"></span>
+					<div class="col-md-6">							
+						<span><b>Valor:  </b>R$</span>
+						<span id="valor_mostrar"></span>
 					</div>
-					<hr>
-					<div class="col-md-6">
-						<span><b>CPF: </b></span><span id="cpf_dados"></span>
-					</div>
-
-					<div class="col-md-6">
-						<span><b>CNPJ: </b></span><span id="cnpj_dados"></span>
-					</div>
-					<hr>
-					<div class="col-md-6">
-						<span><b>Mensalidade: R$</b></span><span id="valor_dados"></span>
-					</div>
-
-					<div class="col-md-6">
-						<span><b>Data de Pgto: </b></span><span id="data_pgto_dados"></span>
-					</div>
-					<hr>
-					<div class="col-md-6">
-						<span><b>Ativo: </b></span><span id="ativo_dados"></span>
-					</div>
-
-					<div class="col-md-6">
-						<span><b>Data de Cadastro: </b></span><span id="data_cad_dados"></span>
-					</div>
-					<hr>
-					<div class="col-md-12">
-						<span><b>Endereço: </b></span><span id="endereco_dados"></span>
-					</div>
-					<hr>
-					<hr>
-					<hr>
 				</div>
 
-				<div class="modal-footer">
+
+				<div class="row" style="border-bottom: 1px solid #cac7c7;">
+					<div class="col-md-6">							
+						<span><b>Data Lançamento: </b></span>
+						<span id="lanc_mostrar"></span>							
+					</div>
+					<div class="col-md-6">							
+						<span><b>Data Vencimento: </b></span>
+						<span id="venc_mostrar"></span>
+					</div>
 				</div>
+
+
+
+				<div class="row" style="border-bottom: 1px solid #cac7c7;">
+					<div class="col-md-6">							
+						<span><b>Data PGTO: </b></span>
+						<span id="pgto_mostrar"></span>							
+					</div>
+					<div class="col-md-6">							
+						<span><b>Usuário Cadastro: </b></span>
+						<span id="usu_lanc_mostrar"></span>
+					</div>
+				</div>
+
+
+				<div class="row" style="border-bottom: 1px solid #cac7c7;">
+					<div class="col-md-6">							
+						<span><b>Usuário Baixa: </b></span>
+						<span id="usu_pgto_mostrar"></span>							
+					</div>
+					<div class="col-md-6">							
+						<span><b>Frequência: </b></span>
+						<span id="freq_mostrar"></span>
+					</div>
+				</div>
+
+
+				<div class="row" style="border-bottom: 1px solid #cac7c7;">
+					
+					<div class="col-md-6">							
+						<span><b>Pago: </b></span>
+						<span id="pago_mostrar"></span>
+					</div>
+				</div>
+
+
+
+
+
+				<div class="row">
+					<div class="col-md-12" align="center">		
+						<a id="link_arquivo" target="_blank"><img  width="200px" id="target_mostrar"></a>	
+					</div>
+				</div>
+
+
 
 			</div>
 
@@ -331,6 +358,8 @@ $data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
 		</div>
 	</div>
 </div>
+
+
 
 
 
@@ -397,6 +426,7 @@ $data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
 
 <script type="text/javascript">
 	function carregarImgArquivos() {
+	
 		var target = document.getElementById('target-arquivos');
 		var file = document.querySelector("#foto-arquivos").files[0];
 
@@ -404,29 +434,29 @@ $data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
 		resultado = arquivo.split(".", 2);
 
 		if (resultado[1] === 'pdf') {
-			$('#target').attr('src', "images/pdf.png");
+			$('#target-arquivos').attr('src', "images/pdf.png");
 			return;
 		}
 
 		if (resultado[1] === 'rar' || resultado[1] === 'zip') {
-			$('#target').attr('src', "images/rar.png");
+			$('#target-arquivos').attr('src', "images/rar.png");
 			return;
 		}
 
 		if (resultado[1] === 'doc' || resultado[1] === 'docx' || resultado[1] === 'txt') {
-			$('#target').attr('src', "images/word.png");
+			$('#target-arquivos').attr('src', "images/word.png");
 			return;
 		}
 
 
 		if (resultado[1] === 'xlsx' || resultado[1] === 'xlsm' || resultado[1] === 'xls') {
-			$('#target').attr('src', "images/excel.png");
+			$('#target-arquivos').attr('src', "images/excel.png");
 			return;
 		}
 
 
 		if (resultado[1] === 'xml') {
-			$('#target').attr('src', "images/xml.png");
+			$('#target-arquivos').attr('src', "images/xml.png");
 			return;
 		}
 

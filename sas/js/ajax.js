@@ -103,3 +103,25 @@ function ativar(id, acao){
         }
     });
 }
+
+function baixar(id){
+    var id_usuario = localStorage.id_usu;
+    //alert('oiii');
+    $.ajax({
+        url: 'paginas/' + pag + "/baixar.php",
+        method: 'POST',
+        data: {id, id_usuario},
+        dataType: "html",
+
+        success:function(mensagem){
+            if (mensagem.trim() == "Baixado com Sucesso") {
+                listar();                       
+
+            } else {
+
+                $('#mensagem-excluir').addClass('text-danger')
+                $('#mensagem-excluir').text(mensagem)
+            }
+        }
+    });
+}

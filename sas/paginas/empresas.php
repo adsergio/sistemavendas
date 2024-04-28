@@ -156,6 +156,40 @@ $pag = 'empresas';
 	</div>
 </div>
 
+<!-- Modal Contas -->
+<div class="modal fade" id="modalContas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel"><span id="titulo_contas"></span></h4>
+				<button id="btn-fechar-conta" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			
+				<div class="modal-body">
+			
+					<div id="listar-contas"></div>
+
+				</div>
+				
+			
+		</div>
+	</div>
+</div>
+
+<!-- Modal Mostrar Dados -->
+<div class="modal fade" id="modalDados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel"><span id="titulo_dados"></span></h4>
+				<button id="btn-fechar-dados" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+
 <!-- Modal Mostrar Dados -->
 <div class="modal fade" id="modalDados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -359,6 +393,21 @@ function excluirArquivo(id){
 
                
             }
+        }
+    });
+}
+
+function listarContas(id){
+    var id_usuario = localStorage.id_usu;
+    $.ajax({
+        url: 'paginas/' + pag + "/listar-contas.php",
+        method: 'POST',
+        data: {id_usuario, id},
+        dataType: "html",
+
+        success:function(result){
+            $("#listar-contas").html(result);
+            
         }
     });
 }

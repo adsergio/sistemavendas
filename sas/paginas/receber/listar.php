@@ -2,20 +2,18 @@
 
 require_once("../../../conexao.php");
 $tabela = 'receber';
+$data_hoje = date('Y-m-d');
 
 $data_inicial = @$_POST['data_inicial'];
 $data_final = @$_POST['data_final'];
 $status = @$_POST['status'];
 $vencidas = @$_POST['vencidas'];
 
-if($vencidas != ""){
+if ($vencidas != "") {
     $query = $pdo->query("SELECT * FROM $tabela WHERE data_venc < curDate() and pago != 'Sim' order by data_venc asc");
-}
-else{
+} else {
     $query = $pdo->query("SELECT * FROM $tabela WHERE data_venc >= '$data_inicial' and data_venc <= '$data_final' and pago LIKE '%$status%' order by id desc");
 }
-//$data_inicial = '2024-04-01';
-//$data_final = '2024-04-31';
 
 
 
@@ -42,6 +40,12 @@ if ($total_reg > 0) {
 	</thead> 
 	<tbody>	
 HTML;
+$pendentesF = 0;
+$recebidasF = 0;
+$vencidasF = 0;
+$pendentes = 0;
+$recebidas = 0;
+$vencidas = 0;
 
 
     for ($i = 0; $i < $total_reg; $i++) {
@@ -115,18 +119,28 @@ HTML;
 
 
         if ($pago == 'Sim') {
-            $classe_pago = 'verde';
+            $classe_pago = 'text-verde';
             $ocultar = 'ocultar';
+            $recebidas += $valor;
         } else {
             $classe_pago = 'text-danger';
             $ocultar = '';
+            $pendentes += $valor;
         }
 
+        $classe_debito = '';
+        if (strtotime($data_venc) < strtotime($data_hoje) and $pago != 'Sim') {
+            $classe_debito = 'text-danger';
+            $vencidas += $valor;
+        }
 
+        $recebidasF = number_format($recebidas, 2, ',', '.');
+        $pendentesF = number_format( $pendentes, 2, ',', '.');
+        $vencidasF = number_format($vencidas, 2, ',', '.');
 
         echo <<<HTML
 
-<tr>
+<tr class="{$classe_debito}">
 <td><i class="fa fa-square {$classe_pago} mr-1"></i> {$descricao}</td> 
 					<td class="esc">R$ {$valorF}</td>	
 				<td class="esc">{$data_vencF}</td>
@@ -134,15 +148,36 @@ HTML;
 				<td class="esc">{$nome_pessoa}</td>
 				<td><a href="images/contas/{$arquivo}" target="_blank"><img src="images/contas/{$tumb_arquivo}" width="30px" height="30px"></a></td>
 				<td>
-					<big><a class="{$ocultar}" href="#" onclick="editar('{$id}', '{$descricao}', '{$pessoa}','{$valor}','{$data_venc}','{$frequencia}','{$saida}','{$arquivo}')" title="Editar Dados"><i class="fa fa-edit text-primary "></i></a></big>
+					<big><a class="{$ocultar}" href="#" onclick="editar('{$id}', '{$descricao}', '{$pessoa}','{$valor}','{$data_venc}','{$frequencia}','{$tumb_arquivo}')" title="Editar Dados"><i class="fa fa-edit text-primary "></i></a></big>
 
-					<big><a href="#" onclick="mostrar('{$id}', '{$descricao}', '{$nome_pessoa}','{$valor}','{$data_lancF}','{$data_vencF}','{$data_pgtoF}','{$nome_usu_lanc}','{$nome_usu_pgto}','{$nome_frequencia}','{$saida}','{$arquivo}','{$pago}')" title="Ver Dados"><i class="fa fa-info-circle text-secondary"></i></a></big>
+					<big><a href="#" onclick="mostrar('{$id}', '{$descricao}', '{$nome_pessoa}','{$valorF}','{$data_lancF}','{$data_vencF}','{$data_pgtoF}','{$nome_usu_lanc}','{$nome_usu_pgto}','{$nome_frequencia}','{$tumb_arquivo}','{$pago}','{$arquivo}')" title="Ver Dados"><i class="fa fa-info-circle text-secondary"></i></a></big>
 
-					<big><a class="{$ocultar}" href="#" onclick="excluir('{$id}', '{$descricao}')" title="Excluir Item"><i class="fa fa-trash-o text-danger"></i></a></big>
+					<li class="dropdown head-dpdn2" style="display: inline-block;">
+		                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-trash-o text-danger"></i></big></a>
 
-					<big><a class="{$ocultar}" href="#" onclick="parcelar('{$id}', '{$valor}', '{$descricao}')" title="Parcelar Conta"><i class="fa fa-calendar-o " style="color:#7f7f7f"></i></a></big>
+		            <ul class="dropdown-menu" style="margin-left:-230px;">
+		            <li>
+		            <div class="notification_desc2">
+                    <p>Confirmar Exclusão? <a href="#" onclick="excluir('{$id}')"><span class="text-danger">Sim</span></a></p>
+                    </div>
+                    </li>										
+                    </ul>
+                    </li>
 
-					<big><a class="{$ocultar}" href="#" onclick="baixar('{$id}', '{$valor}', '{$descricao}', '{$saida}')" title="Baixar Conta"><i class="fa fa-check-square " style="color:#079934"></i></a></big>
+					
+
+					<li class="dropdown head-dpdn2" style="display: inline-block;">
+		                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-check-square text-verde"></i></big></a>
+
+		            <ul class="dropdown-menu" style="margin-left:-230px;">
+		            <li>
+		            <div class="notification_desc2">
+                    <p>Confirmar baixa da conta? <a href="#" onclick="baixar('{$id}')"><span class="text-verde">Sim</span></a></p>
+                    </div>
+                    </li>										
+                    </ul>
+                    </li>
+
 
 					<big><a href="#" onclick="arquivo('{$id}', '{$descricao}')" title="Inserir / Ver Arquivos"><i class="fa fa-file-o " style="color:#22146e"></i></a></big>
 				</td>    
@@ -154,6 +189,13 @@ HTML;
 </tbody>
 <small><div align="center" id="mensagem-excluir"></div></small>
 </table>
+<br>
+<div align="right">
+     <span style="margin-right: 25px">Contas Vencidas: <span class ="text-danger">R$ {$vencidasF}</span></span>
+     <span style="margin-right: 25px">Contas Pendentes: <span class ="text-danger">R$ {$pendentesF}</span></span>
+     <span style="margin-right: 25px">Contas Contas Recebidas: <span class ="text-verde">R$ {$recebidasF}</span></span>
+    </div> 
+
 </small>
 HTML;
 } else {
@@ -174,55 +216,64 @@ HTML;
 </script>
 
 <script type="text/javascript">
-    function editar(id, nome, email, telefone, cpf, cnpj, valor, data_pgto, endereco) {
-        $('#id').val(id);
-        $('#nome').val(nome);
-        $('#email').val(email);
-        $('#telefone').val(telefone);
-        $('#cpf').val(cpf);
-        $('#cnpj').val(cnpj);
-        $('#valor').val(valor);
-        $('#data_pgto').val(data_pgto);
-        $('#endereco').val(endereco);
+    function editar(id, descricao, pessoa, valor, data_venc, frequencia, arquivo) {
 
+
+        $('#id').val(id);
+        $('#descricao').val(descricao);
+        $('#pessoa').val(pessoa).change();
+        $('#valor').val(valor);
+        $('#data_venc').val(data_venc);
+        $('#frequencia').val(frequencia).change();
+        //$('#saida').val(saida).change();
+
+        $('#arquivo').val('');
 
 
         $('#titulo_inserir').text('Editar Registro');
         $('#modalForm').modal('show');
+        $('#mensagem').text('');
+        $('#target').attr('src', 'images/contas/' + arquivo);
 
     }
-</script>
-
-<script type="text/javascript">
-    function mostrar(nome, email, telefone, cpf, cnpj, valor, data_pgto, ativo, data_cad, endereco) {
-
-        $('#titulo_dados').text(nome);
-        $('#email_dados').text(email);
-        $('#telefone_dados').text(telefone);
-        $('#cpf_dados').text(cpf);
-        $('#cnpj_dados').text(cnpj);
-        $('#valor_dados').text(valor);
-        $('#data_pgto_dados').text(data_pgto);
-        $('#ativo_dados').text(ativo);
-        $('#data_cad_dados').text(data_cad);
-        $('#endereco_dados').text(endereco);
 
 
-        $('#modalDados').modal('show');
+    function mostrar(id, descricao, pessoa, valor, data_lanc, data_venc, data_pgto, usuario_lanc, usuario_pgto, frequencia, arquivo, pago, link) {
 
+
+        if (data_pgto == "00/00/0000" || data_pgto == "") {
+            data_pgto = 'Não Pago Ainda';
+        }
+
+
+        $('#nome_mostrar').text(descricao);
+        $('#pessoa_mostrar').text(pessoa);
+        $('#valor_mostrar').text(valor);
+        $('#lanc_mostrar').text(data_lanc);
+        $('#venc_mostrar').text(data_venc);
+        $('#pgto_mostrar').text(data_pgto);
+        $('#usu_lanc_mostrar').text(usuario_lanc);
+        $('#usu_pgto_mostrar').text(usuario_pgto);
+        $('#freq_mostrar').text(frequencia);
+
+        $('#pago_mostrar').text(pago);
+
+        $('#link_arquivo').attr('href', 'images/contas/' + link);
+
+
+        $('#modalMostrar').modal('show');
+        $('#target_mostrar').attr('src', 'images/contas/' + arquivo);
     }
 
     function limparCampos() {
         $('#id').val('');
-        $('#nome').val('');
-        $('#nome').val('');
-        $('#email').val('');
-        $('#telefone').val('');
-        $('#cpf').val('');
-        $('#cnpj').val('');
+        $('#descricao').val('');
         $('#valor').val('');
-        $('#data_pgto').val('');
-        $('#endereco').val('');
+        $('#data_venc').val('<?= $data_hoje ?>');
+        $('#arquivo').val('');
+        $('#pessoa').val('').change();
+        $('#frequencia').val('0');
+        $('#target').attr('src', 'images/contas/sem-foto.png');
     }
 
 
@@ -231,18 +282,18 @@ HTML;
         $('#titulo_arquivo').text(nome);
         $('#id_arquivo').val(id);
         $('#id_usuario_arquivo').val(localStorage.id_usu);
-        $('#target').attr("src", "images/arquivos/sem-foto.png");
+        $('#target-arquivos').attr("src", "images/arquivos/sem-foto.png");
         $('#modalArquivos').modal('show');
         listarArquivos(id);
         limparArquivos()
 
     }
 
-    function limparArquivos() {
-        $('#nome_arquivo').val('');
-        $('#data_validade').val('');
-        $('#foto').val('');
-        $('#target').attr("src", "images/arquivos/sem-foto.png");
+    function limparArquivos(){
+    $('#nome_arquivo').val('');
+    $('#data_validade').val('');
+    $('#foto').val('');
+    $('#target').attr("src","images/arquivos/sem-foto.png");
 
-    }
+}
 </script>

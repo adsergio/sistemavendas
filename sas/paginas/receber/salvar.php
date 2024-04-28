@@ -4,13 +4,14 @@ require_once("../../../conexao.php");
 
 
 $descricao = $_POST['descricao'];
-$pessoa = $_POST['pessoa'];
+$pessoa = @$_POST['pessoa'];
 $valor = $_POST['valor'];
 $data_venc = $_POST['data_venc'];
 $frequencia = $_POST['frequencia'];
 $id_usuario = $_POST['id_usuario'];
 $id = $_POST['id'];
 
+$valorF = str_replace(',', '.', $valor);
 
 if($descricao == "" and $pessoa == ""){
 	echo 'Escolha um Fornecedor ou insira uma descrição!';
@@ -78,7 +79,7 @@ if($id == ""){
 }
 
 $query->bindValue(":descricao", "$descricao");
-$query->bindValue(":valor", "$valor");
+$query->bindValue(":valor", "$valorF");
 $query->execute();
 $ult_id = $pdo->lastInsertId();
 

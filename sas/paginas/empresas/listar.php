@@ -94,6 +94,8 @@ echo <<<HTML
         <big><a href="http://api.whatsapp.com/send?1=pt_BR&phone=$whats&text=" target="_blank" title="Abrir Whatsapp" class="text-verde"><i class="fa fa-whatsapp text-verde"></i></a></big>
 
         <big><a href="#" onclick="arquivo('{$id}','{$nome}' )" title="Anexar Arquivo"><i class="fa fa-file-archive-o text-primary"></i></a></big>
+
+        <big><a href="#" onclick="contas('{$id}','{$nome}' )" title="Ver Contas"><i class="fa fa-dollar text-verde"></i></a></big>
         
 </td>    
 </tr>
@@ -189,6 +191,15 @@ HTML;
     $('#modalArquivos').modal('show');
     listarArquivos(id);
     limparArquivos()
+    
+}
+
+function contas(id, nome){
+    
+    $('#titulo_contas').text(nome);
+    $('#modalContas').modal('show');
+    listarContas(id);
+    
     
 }
 

@@ -4,7 +4,7 @@ $tabela = 'arquivos';
 $nome = $_POST['nome'];
 $data_validade = $_POST['data_validade'];
 $id_usuario = $_POST['id_usuario'];
-$id_empresa = $_POST['id_arquivo'];
+$id_ref = $_POST['id_arquivo'];
 $foto = 'sem-foto.png';
 
 //SCRIPT PARA SUBIR FOTO NO SERVIDOR
@@ -29,8 +29,8 @@ if(@$_FILES['foto']['name'] != ""){
 	}
 }
 
-$query = $pdo->prepare("INSERT into $tabela SET empresa = '0', nome = :nome,  tipo = 'Empresa', usuario = '$id_usuario', 
-data_cad = curDate(), data_validade = '$data_validade', foto = '$foto', id_ref = '$id_empresa' ");
+$query = $pdo->prepare("INSERT into $tabela SET empresa = '0', nome = :nome,  tipo = 'Receber', usuario = '$id_usuario', 
+data_cad = curDate(), data_validade = '$data_validade', foto = '$foto', id_ref = '$id_ref' ");
 $query->bindValue(":nome", "$nome");	
 $query->execute();
 
