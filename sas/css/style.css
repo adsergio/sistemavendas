@@ -8483,3 +8483,7 @@ h4.asd label {
 .text-verde{
   color:#0e9e29;
 }
+
+.ocultar{
+  display:none;
+}

@@ -1,7 +1,7 @@
 <?php
 
 require_once("../../../conexao.php");
-$tabela = 'receber';
+$tabela = 'pagar';
 $data_hoje = date('Y-m-d');
 
 $data_inicial = @$_POST['data_inicial'];
@@ -32,7 +32,6 @@ if ($total_reg > 0) {
 				<th class="esc">Valor</th> 
 				<th class="esc">Vencimento</th> 
 				<th class="esc">Frequência</th>
-				<th class="esc">Empresa</th>
 				<th>Arquivo</th>				
 				<th>Ações</th>
     
@@ -108,15 +107,6 @@ $vencidas = 0;
         }
 
 
-        $query2 = $pdo->query("SELECT * FROM empresas where id = '$pessoa'");
-        $res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
-        if (@count($res2) > 0) {
-            $nome_pessoa = $res2[0]['nome_resp'];
-        } else {
-            $nome_pessoa = 'Sem Cliente';
-        }
-
-
 
         if ($pago == 'Sim') {
             $classe_pago = 'text-verde';
@@ -145,12 +135,11 @@ $vencidas = 0;
 					<td class="esc">R$ {$valorF}</td>	
 				<td class="esc">{$data_vencF}</td>
 				<td class="esc">{$nome_frequencia}</td>
-				<td class="esc">{$nome_pessoa}</td>
 				<td><a href="images/contas/{$arquivo}" target="_blank"><img src="images/contas/{$tumb_arquivo}" width="30px" height="30px"></a></td>
 				<td>
-					<big><a href="#" onclick="editar('{$id}', '{$descricao}', '{$pessoa}','{$valor}','{$data_venc}','{$frequencia}','{$tumb_arquivo}')" title="Editar Dados"><i class="fa fa-edit text-primary "></i></a></big>
+					<big><a href="#" onclick="editar('{$id}', '{$descricao}', '{$valor}','{$data_venc}','{$frequencia}','{$tumb_arquivo}')" title="Editar Dados"><i class="fa fa-edit text-primary "></i></a></big>
 
-					<big><a href="#" onclick="mostrar('{$id}', '{$descricao}', '{$nome_pessoa}','{$valorF}','{$data_lancF}','{$data_vencF}','{$data_pgtoF}','{$nome_usu_lanc}','{$nome_usu_pgto}','{$nome_frequencia}','{$tumb_arquivo}','{$pago}','{$arquivo}')" title="Ver Dados"><i class="fa fa-info-circle text-secondary"></i></a></big>
+					<big><a href="#" onclick="mostrar('{$id}', '{$descricao}', '{$valorF}','{$data_lancF}','{$data_vencF}','{$data_pgtoF}','{$nome_usu_lanc}','{$nome_usu_pgto}','{$nome_frequencia}','{$tumb_arquivo}','{$pago}','{$arquivo}')" title="Ver Dados"><i class="fa fa-info-circle text-secondary"></i></a></big>
 
 					<li class="dropdown head-dpdn2" style="display: inline-block;">
 		                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-trash-o text-danger"></i></big></a>
@@ -193,7 +182,7 @@ HTML;
 <div align="right">
      <span style="margin-right: 25px">Contas Vencidas: <span class ="text-danger">R$ {$vencidasF}</span></span>
      <span style="margin-right: 25px">Contas Pendentes: <span class ="text-danger">R$ {$pendentesF}</span></span>
-     <span style="margin-right: 25px">Contas Recebidas: <span class ="text-verde">R$ {$recebidasF}</span></span>
+     <span style="margin-right: 25px">Contas Pagas: <span class ="text-verde">R$ {$recebidasF}</span></span>
     </div> 
 
 </small>
@@ -216,12 +205,11 @@ HTML;
 </script>
 
 <script type="text/javascript">
-    function editar(id, descricao, pessoa, valor, data_venc, frequencia, arquivo) {
+    function editar(id, descricao, valor, data_venc, frequencia, arquivo) {
 
 
         $('#id').val(id);
         $('#descricao').val(descricao);
-        $('#pessoa').val(pessoa).change();
         $('#valor').val(valor);
         $('#data_venc').val(data_venc);
         $('#frequencia').val(frequencia).change();
@@ -238,7 +226,7 @@ HTML;
     }
 
 
-    function mostrar(id, descricao, pessoa, valor, data_lanc, data_venc, data_pgto, usuario_lanc, usuario_pgto, frequencia, arquivo, pago, link) {
+    function mostrar(id, descricao, valor, data_lanc, data_venc, data_pgto, usuario_lanc, usuario_pgto, frequencia, arquivo, pago, link) {
 
 
         if (data_pgto == "00/00/0000" || data_pgto == "") {
@@ -247,7 +235,6 @@ HTML;
 
 
         $('#nome_mostrar').text(descricao);
-        $('#pessoa_mostrar').text(pessoa);
         $('#valor_mostrar').text(valor);
         $('#lanc_mostrar').text(data_lanc);
         $('#venc_mostrar').text(data_venc);
@@ -271,7 +258,6 @@ HTML;
         $('#valor').val('');
         $('#data_venc').val('<?= $data_hoje ?>');
         $('#arquivo').val('');
-        $('#pessoa').val('').change();
         $('#frequencia').val('0');
         $('#target').attr('src', 'images/contas/sem-foto.png');
     }

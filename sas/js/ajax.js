@@ -104,9 +104,13 @@ function ativar(id, acao){
     });
 }
 
-function baixar(id){
+function baixar(id, pg, id_listar){
     var id_usuario = localStorage.id_usu;
-    //alert('oiii');
+    if(pg != "" && pg != "undefined" && pg != undefined){
+         pag = pg;
+    }
+    
+    
     $.ajax({
         url: 'paginas/' + pag + "/baixar.php",
         method: 'POST',
@@ -115,7 +119,16 @@ function baixar(id){
 
         success:function(mensagem){
             if (mensagem.trim() == "Baixado com Sucesso") {
-                listar();                       
+                
+                if(id_listar == "" || id_listar == "undefined" || id_listar == undefined){
+                    listar();
+                } else {
+                    listarContas(id_listar); 
+                    alert('Pagamento confirmado!');
+
+                }
+               
+                                      
 
             } else {
 

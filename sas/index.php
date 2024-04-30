@@ -219,6 +219,9 @@ echo $id_usuario;
 								<ul class="treeview-menu">
 								<li><a href="index.php?pagina=receber"><i class="fa fa-angle-right"></i> Contas á Receber</a></li>
 								</ul>
+								<ul class="treeview-menu">
+								<li><a href="index.php?pagina=pagar"><i class="fa fa-angle-right"></i> Despesas</a></li>
+								</ul>
 							</li>
 
 							<li class="treeview">

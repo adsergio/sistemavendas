@@ -17,6 +17,7 @@ if ($total_reg > 0) {
         <th>Descrição</th>
         <th class="esc">Valor</th> 
         <th class="esc">Vencimento</th> 
+        <th class="esc">Arquivo</th> 
         <th>Baixar</th>
     
 	</tr> 
@@ -89,25 +90,27 @@ HTML;
         echo <<<HTML
 
 <tr class="{$classe_debito}">
-<td><i class="fa fa-square {$classe_pago} mr-1"></i> {$descricao} <a href="images/contas/{$arquivo}" target="_blank"><img src="images/contas/{$tumb_arquivo}" width="30px" height="30px"></a></td> 
+<td><i class="fa fa-square {$classe_pago} mr-1"></i> {$descricao} </td> 
 					<td class="esc">R$ {$valorF}</td>	
 				<td class="esc">{$data_vencF}</td>
+                <td class="esc"><a href="images/contas/{$arquivo}" target="_blank"><img src="images/contas/{$tumb_arquivo}" width="20px" height="20px"></a></td>
+                
 				
 
 <td>
     
 
         <li class="dropdown head-dpdn2" style="display: inline-block;">
-		                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-check-square text-verde"></i></big></a>
+		                <a href="#" class="dropdown-toggle  {$ocultar}" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-check-square text-verde"></i></big></a>
 
 		            <ul class="dropdown-menu" style="margin-left:-230px;">
 		            <li>
 		            <div class="notification_desc2">
-                    <p>Confirmar baixa da conta? <a href="#" onclick="baixar('{$id}')"><span class="text-verde">Sim</span></a></p>
+                    <p style="color:#000">Confirmar baixa da conta? <a href="#" onclick="baixar('{$id}','receber','{$id_empresa}')"><span class="text-verde">Sim</span></a></p>
                     </div>
                     </li>										
                     </ul>
-                    </li>
+        </li>
 
         
 
