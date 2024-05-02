@@ -10,9 +10,9 @@ $status = @$_POST['status'];
 $vencidas = @$_POST['vencidas'];
 
 if ($vencidas != "") {
-    $query = $pdo->query("SELECT * FROM $tabela WHERE data_venc < curDate() and pago != 'Sim' order by data_venc asc");
+    $query = $pdo->query("SELECT * FROM $tabela WHERE data_venc < curDate() and pago != 'Sim' and tipo = 'Empresa' and empresa = '0' order by data_venc asc");
 } else {
-    $query = $pdo->query("SELECT * FROM $tabela WHERE data_venc >= '$data_inicial' and data_venc <= '$data_final' and pago LIKE '%$status%' order by id desc");
+    $query = $pdo->query("SELECT * FROM $tabela WHERE data_venc >= '$data_inicial' and data_venc <= '$data_final' and pago LIKE '%$status%' and tipo = 'Empresa' and empresa = '0' order by id desc");
 }
 
 
