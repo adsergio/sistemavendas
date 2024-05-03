@@ -13,6 +13,22 @@ $ano_atual = Date('Y');
 $data_mes = $ano_atual."-".$mes_atual."-01";
 $data_ano = $ano_atual."-01-01";
 
+
+
+
+
+$data_inicio_mes = $ano_atual."-".$mes_atual."-01";
+
+if($mes_atual == '4' || $mes_atual == '6' || $mes_atual == '9' || $mes_atual == '11'){
+    $dia_final_mes = '30';
+}else if($mes_atual == '2'){
+    $dia_final_mes = '28';
+}else{
+    $dia_final_mes = '31';
+}
+
+$data_final_mes = $ano_atual."-".$mes_atual."-".$dia_final_mes;
+
 //Criar uma config caso não tenha nenhuma
 $query = $pdo->query("SELECT * FROM config WHERE empresa = 0");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -270,48 +286,63 @@ echo $id_usuario;
 				<div class="profile_details_left"><!--notifications of menu start -->
 					<ul class="nofitications-dropdown">
 						<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">4</span></a>
+							<?php
+							$query = $pdo->query("SELECT * FROM receber WHERE data_venc < curDate() and pago != 'Sim' and tipo = 'Empresa' and empresa = '0' order by data_venc asc");
+							$res = $query->fetchAll(PDO::FETCH_ASSOC);
+							$total_reg = @count($res);
+							if ($total_reg <= 1) {
+								$texto_pendentes = 'recebimento Vencido';
+							} else {
+								$texto_pendentes = 'recebimentos Vencidos';
+							}
+							?>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-usd" style="color:#FFF"></i><span class="badge"><?php echo $total_reg ?></span></a>
 							<ul class="dropdown-menu">
 								<li>
 									<div class="notification_header">
-										<h3>You have 3 new messages</h3>
+										<h3>Você possui <?php echo $total_reg?> <?php echo $texto_pendentes ?></h3>
 									</div>
 								</li>
-								<li><a href="#">
+								<?php
+								for ($i = 0; $i < $total_reg; $i++) {
+									$descricao = $res[$i]['descricao'];
+									$pessoa = $res[$i]['pessoa'];
+									$valor = $res[$i]['valor'];
+									$data_venc = $res[$i]['data_venc'];
+
+									$query2 = $pdo->query("SELECT * FROM empresas where id = '$pessoa'");
+										$res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+										if (@count($res2) > 0) {
+											$nome_pessoa = $res2[0]['nome_resp'];
+										} else {
+											$nome_pessoa = 'Sem Cliente';
+										}
+
+
+									if($descricao == ""){
+										
+										$descricao = $nome_pessoa;
+
+
+									}	
+									$data_vencF = implode('/', array_reverse(explode('-', $data_venc)));
+									$valorF = number_format($valor, 2, ',', '.');
+								?>
+								<li>
+									<a href="#">
 										<div class="user_img"><img src="images/1.jpg" alt=""></div>
 										<div class="notification_desc">
-											<p>Lorem ipsum dolor amet</p>
-											<p><span>1 hour ago</span></p>
+										    <p><?php echo $descricao ?></p>
+											<p>R$ <?php echo $valorF?> Venc: <?php echo $data_vencF?> </p>
+											
 										</div>
 										<div class="clearfix"></div>
-									</a></li>
-								<li class="odd"><a href="#">
-										<div class="user_img"><img src="images/4.jpg" alt=""></div>
-										<div class="notification_desc">
-											<p>Lorem ipsum dolor amet </p>
-											<p><span>1 hour ago</span></p>
-										</div>
-										<div class="clearfix"></div>
-									</a></li>
-								<li><a href="#">
-										<div class="user_img"><img src="images/3.jpg" alt=""></div>
-										<div class="notification_desc">
-											<p>Lorem ipsum dolor amet </p>
-											<p><span>1 hour ago</span></p>
-										</div>
-										<div class="clearfix"></div>
-									</a></li>
-								<li><a href="#">
-										<div class="user_img"><img src="images/2.jpg" alt=""></div>
-										<div class="notification_desc">
-											<p>Lorem ipsum dolor amet </p>
-											<p><span>1 hour ago</span></p>
-										</div>
-										<div class="clearfix"></div>
-									</a></li>
-								<li>
+									</a>
+								</li>
+
+								<?php } ?>
 									<div class="notification_bottom">
-										<a href="#">See all messages</a>
+										<a href="index.php?pagina=receber">Ver todos os Vencidos</a>
 									</div>
 								</li>
 							</ul>
@@ -916,13 +947,13 @@ echo $id_usuario;
 						<div class="col-md-6">						
 							<div class="form-group"> 
 								<label>Data Inicial</label> 
-								<input type="date" class="form-control" name="dataInicial" id="dataInicialRel-Luc" value="<?php echo date('Y-m-d') ?>" required> 
+								<input type="date" class="form-control" name="dataInicial" id="dataInicialRel-Luc" value="<?php echo $data_inicio_mes ?>" required> 
 							</div>						
 						</div>
 						<div class="col-md-6">
 							<div class="form-group"> 
 								<label>Data Final</label> 
-								<input type="date" class="form-control" name="dataFinal" id="dataFinalRel-Luc" value="<?php echo date('Y-m-d') ?>" required> 
+								<input type="date" class="form-control" name="dataFinal" id="dataFinalRel-Luc" value="<?php echo $data_final_mes ?>" required> 
 							</div>
 						</div>
 

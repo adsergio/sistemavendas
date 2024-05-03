@@ -20,9 +20,9 @@ if($descricao == "" and $pessoa == ""){
 
 
 if($descricao == "" and $pessoa != ""){
-	$query = $pdo->query("SELECT * FROM clientes where id = '$pessoa'");
+	$query = $pdo->query("SELECT * FROM empresas where id = '$pessoa'");
 	$res = $query->fetchAll(PDO::FETCH_ASSOC);
-	$nome_pessoa = $res[0]['nome'];
+	$nome_pessoa = $res[0]['nome_resp'];
 	$descricao = $nome_pessoa;
 }
 
