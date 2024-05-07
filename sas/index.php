@@ -45,6 +45,8 @@ if ($total_reg == 0) {
 	$tipo_relatorio = $res[0]["tipo_rel"];
 	$instagram_sistema = $res[0]["instagram_sistema"];
 	$endereco_sistema = $res[0]["endereco_sistema"];
+	$dias_bloqueio = $res[0]["dias_bloqueio"];
+	$msg_bloqueio = $res[0]["msg_bloqueio"];
 }
 
 $id_usuario = "<script>document.write(localStorage.id_usu)</script>";
@@ -632,7 +634,18 @@ echo $id_usuario;
 							</select>
 						</div>
 
+					</div>
 
+					<div class="row">
+						<div class="col-md-2">
+							<label>Dias Bloqueio</label>
+							<input type="number" class="form-control" id="dias_bloqueio" name="dias_bloqueio" placeholder="" value="<?php echo @$dias_bloqueio ?>">
+						</div>
+
+						<div class="col-md-10">
+							<label>Mensagem de Bloqueio</label>
+							<input type="text" class="form-control" id="msg_bloqueio" name="msg_bloqueio" placeholder="Regularize sua mensalidade, seu acesso ao sistema será bloqueado" value="<?php echo @$msg_bloqueio ?>">
+						</div>
 
 					</div>
 
@@ -689,6 +702,8 @@ echo $id_usuario;
 
 
 					</div>
+
+					
 
 
 					<br>

@@ -7,6 +7,8 @@ $email_sistema = $_POST['email_sistema'];
 $tipo_rel = $_POST['tipo_rel'];
 $endereco_sistema = $_POST['endereco_sistema'];
 $instagram_sistema = $_POST['instagram_sistema'];
+$msg_bloqueio = $_POST['msg_bloqueio'];
+$dias_bloqueio = $_POST['dias_bloqueio'];
 
 
 
@@ -74,10 +76,9 @@ if(@$_FILES['foto-logo-rel']['name'] != ""){
 	}
 }
 
-$query = $pdo->prepare("UPDATE config SET nome_sistema =:nome_sistema,
- telefone_sistema =:telefone_sistema, telefone_fixo =:telefone_fixo, 
- email_sistema =:email_sistema, tipo_rel ='$tipo_rel',
- endereco_sistema =:endereco_sistema, instagram_sistema =:instagram_sistema WHERE empresa = '0' ");
+$query = $pdo->prepare("UPDATE config SET nome_sistema =:nome_sistema, telefone_sistema =:telefone_sistema, telefone_fixo =:telefone_fixo, 
+ email_sistema =:email_sistema, tipo_rel ='$tipo_rel',  endereco_sistema =:endereco_sistema, instagram_sistema =:instagram_sistema, msg_bloqueio =:msg_bloqueio,
+ dias_bloqueio = '$dias_bloqueio' WHERE empresa = '0' ");
 
 $query->bindValue(":nome_sistema", $nome_sistema);
 $query->bindValue(":telefone_sistema", $telefone_sistema);
@@ -85,6 +86,7 @@ $query->bindValue(":telefone_fixo", $telefone_fixo);
 $query->bindValue(":email_sistema", $email_sistema);
 $query->bindValue(":endereco_sistema", $endereco_sistema);
 $query->bindValue(":instagram_sistema", $instagram_sistema);
+$query->bindValue(":msg_bloqueio", $msg_bloqueio);
 $query->execute();
 
 echo"Editado com Sucesso";

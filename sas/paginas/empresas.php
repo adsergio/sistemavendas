@@ -173,12 +173,42 @@ $pag = 'empresas';
 
 				</div>
 				
+				
 			
 		</div>
 	</div>
 </div>
 
+<!-- Modal Contrato -->
+<div class="modal fade" id="modalContrato" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel"><span id="titulo_contrato"></span></h4>
+				<button id="btn-fechar-contrato" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="form-contrato">
+				<div class="modal-body">
+			
+					<div id="">
+					<textarea name="contrato" id="contrato" class="textareag"> </textarea>
+					
+					<!-- <textarea id="listar-contrato"></textarea>	 -->
+					</div>
+					<input type="text" name="id" id="id_contrato">
 
+				</div>
+				<div id="mensagem-contrato" align="center"></div>
+				
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Gerar Relatório</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <!-- Modal Mostrar Dados -->
 <div class="modal fade" id="modalDados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -253,6 +283,8 @@ $pag = 'empresas';
 </script>
 <script src="js/ajax.js"></script>
 
+<script src="//js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
 
 
 
@@ -402,4 +434,58 @@ function listarContas(id){
     });
 }
 
+function listarTextoContrato(id){
+	pag = 'empresas';
+    var id_usuario = localStorage.id_usu;
+    $.ajax({
+        url: 'paginas/' + pag + "/texto-contrato.php",
+        method: 'POST',
+        data: {id_usuario, id},
+        dataType: "html",
+
+        success:function(result){
+            nicEditors.findEditor("contrato").setContent(result);
+            
+        }
+    });
+
+	$("#form-contrato").submit(function() {
+		
+		event.preventDefault();
+		//nicEditors.findEditor('contrato').saveContent();
+		var formData = new FormData(this);
+
+		$.ajax({
+			url: 'paginas/' + pag + "/salvar-contrato.php",
+			type: 'POST',
+			data: formData,
+
+			success: function(mensagem) {
+				$('#mensagem-contrato').text('');
+				$('#mensagem-contrato').removeClass()
+				if (mensagem.trim() == "Salvo com Sucesso") {
+
+					} else {
+
+					$('#mensagem-contrato').addClass('text-danger')
+					$('#mensagem-contrato').text(mensagem)
+				}
+
+
+			},
+
+			cache: false,
+			contentType: false,
+			processData: false,
+
+		});
+
+	});
+}
+</script>
+
+
+
+<script type="text/javascript">
+	
 </script>

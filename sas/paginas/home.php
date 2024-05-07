@@ -135,8 +135,8 @@ $dados_meses_receitas =  '';
 
 <div class="main-page">
 
-<input type="text" name="id" id="dados_grafico_despesa">
-<input type="text" name="id" id="dados_grafico_receita">
+<input type="hidden" name="id" id="dados_grafico_despesa">
+<input type="hidden" name="id" id="dados_grafico_receita">
 
 	<div class="col_3">
 		<a href="index.php?pagina=empresas">
@@ -208,7 +208,7 @@ $dados_meses_receitas =  '';
 		<div class="col-md-12 content-top-2 card">
 			<div class="agileinfo-cdr">
 				<div class="card-header">
-					<h3>Weekly Sales</h3>
+					<h3>Movimentação Anual</h3>
 				</div>
 				
 				<div id="Linegraph" style="width: 98%; height: 350px">
@@ -232,48 +232,7 @@ $dados_meses_receitas =  '';
 <!-- for index page weekly sales java script -->
 <script src="js/SimpleChart.js"></script>
 <script>
-	var graphdata1 = {
-		linecolor: "#f2371f",
-		title: "Despesas",
-		values: [
-		{ X: "Janeiro", Y: parseFloat(saldo_mes[1])},
-		{ X: "Fevereiro", Y: 20.00 },
-		{ X: "Março", Y: 40.00 },
-		{ X: "Abril", Y: 34.00 },
-		{ X: "Maio", Y: 40.25 },
-		{ X: "Junho", Y: 28.56 },
-		{ X: "Julho", Y: 18.57 },
-		{ X: "Agosto", Y: 34.00 },
-		{ X: "Setembro", Y: 40.89 },
-		{ X: "Outubro", Y: 12.57 },
-		{ X: "Novembro", Y: 28.24 },
-		{ X: "Dezembro", Y: 18.00 }
-		
-		]
-	};
-	var graphdata2 = {
-		linecolor: "#04ba41",
-		title: "Receitas",
-		values: [
-		{ X: "Janeiro", Y:parseFloat(saldo_mes[1])},
-		{ X: "Fevereiro", Y: 30.00 },
-		{ X: "Março", Y: 10.00 },
-		{ X: "Abril", Y: 344.00 },
-		{ X: "Maio", Y: 50.25 },
-		{ X: "Junho", Y: 38.56 },
-		{ X: "Julho", Y: 28.57 },
-		{ X: "Agosto", Y: 44.00 },
-		{ X: "Setembro", Y: 20.89 },
-		{ X: "Outubro", Y: 2.57 },
-		{ X: "Novembro", Y: 38.24 },
-		{ X: "Dezembro", Y: 38.00 }
-		
-		]
-	};
-	
-	
-	$(function () {
-		$('#dados_grafico_despesa').val('<?=$dados_meses_despesas?>'); 
+	$('#dados_grafico_despesa').val('<?=$dados_meses_despesas?>'); 
 		var dados = $('#dados_grafico_despesa').val();
         saldo_mes = dados.split('-'); 
 
@@ -281,6 +240,48 @@ $dados_meses_receitas =  '';
 		var dados_rec = $('#dados_grafico_receita').val();
         saldo_mes_rec = dados_rec.split('-'); 
 		
+		
+	var graphdata1 = {
+		linecolor: "#f2371f",
+		title: "Despesas",
+		values: [
+		{ X: "Janeiro", Y: parseFloat(saldo_mes[0])},
+		{ X: "Fevereiro", Y: parseFloat(saldo_mes[1])},
+		{ X: "Março", Y: parseFloat(saldo_mes[2])},
+		{ X: "Abril", Y: parseFloat(saldo_mes[3])},
+		{ X: "Maio", Y: parseFloat(saldo_mes[4])},
+		{ X: "Junho", Y: parseFloat(saldo_mes[5])},
+		{ X: "Julho", Y: parseFloat(saldo_mes[6])},
+		{ X: "Agosto", Y: parseFloat(saldo_mes[7])},
+		{ X: "Setembro", Y: parseFloat(saldo_mes[8])},
+		{ X: "Outubro", Y: parseFloat(saldo_mes[9])},
+		{ X: "Novembro", Y: parseFloat(saldo_mes[10])},
+		{ X: "Dezembro", Y: parseFloat(saldo_mes[11])},
+		
+		]
+	};
+	var graphdata2 = {
+		linecolor: "#04ba41",
+		title: "Receitas",
+		values: [
+		{ X: "Janeiro", Y:parseFloat(saldo_mes_rec[0])},
+		{ X: "Fevereiro", Y: parseFloat(saldo_mes_rec[1])},
+		{ X: "Março", Y: parseFloat(saldo_mes_rec[2])},
+		{ X: "Abril", Y: parseFloat(saldo_mes_rec[3])},
+		{ X: "Maio", Y: parseFloat(saldo_mes_rec[4])},
+		{ X: "Junho", Y: parseFloat(saldo_mes_rec[5])},
+		{ X: "Julho", Y: parseFloat(saldo_mes_rec[6])},
+		{ X: "Agosto", Y: parseFloat(saldo_mes_rec[7])},
+		{ X: "Setembro", Y: parseFloat(saldo_mes_rec[8])},
+		{ X: "Outubro", Y: parseFloat(saldo_mes_rec[9])},
+		{ X: "Novembro", Y: parseFloat(saldo_mes_rec[10])},
+		{ X: "Dezembro", Y: parseFloat(saldo_mes_rec[11])},
+		
+		]
+	};
+	
+	
+	$(function () {
 		
 		
 		$("#Linegraph").SimpleChart({

@@ -60,19 +60,32 @@ if($ativo == 'Sim'){
     $classe_ativo = '#dbdbdb';
 }
 
-     
+
+
+// Verificar se empresa tem Debitos
+
+$query2 = $pdo->query("SELECT * FROM receber WHERE data_venc < curDate() and pago != 'Sim' and tipo = 'Empresa' and empresa = '0' and pessoa = '$id' order by data_venc asc");
+							$res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+							$total_reg2 = @count($res2);
+                            //echo $total_reg2;
+							if ($total_reg2 > 0) {
+                                
+								$conta_pendente = 'text-danger';
+							} else {
+								$conta_pendente = '';
+							}
+                                
 echo <<<HTML
-<!--<tr class="{$classe_ativo}">-->
 <tr style="color:{$classe_ativo}">
-<td>{$nome}</td>
+<td class ="{$conta_pendente}">{$nome}</td>
 <td class="esc">{$telefone}</td>
 <td class="esc">{$email}</td>
 <td class="esc">{$cnpj}</td>
 <td class="esc">{$data_pgtoF}</td>
 <td class="esc">R$ {$valorF}</td>
 <td>
-    <big><a href="#" onclick="editar('{$id}','{$nome}','{$email}','{$telefone}','{$cpf}',
-    '{$cnpj}','{$valor}','{$data_pgto}','{$endereco}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
+    <a href="#" onclick="editar('{$id}','{$nome}','{$email}','{$telefone}','{$cpf}',
+    '{$cnpj}','{$valor}','{$data_pgto}','{$endereco}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a>
 
 <li class="dropdown head-dpdn2" style="display: inline-block;">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-trash-o text-danger"></i></big></a>
@@ -93,9 +106,11 @@ echo <<<HTML
 
         <big><a href="http://api.whatsapp.com/send?1=pt_BR&phone=$whats&text=" target="_blank" title="Abrir Whatsapp" class="text-verde"><i class="fa fa-whatsapp text-verde"></i></a></big>
 
-        <big><a href="#" onclick="arquivo('{$id}','{$nome}' )" title="Anexar Arquivo"><i class="fa fa-file-archive-o text-primary"></i></a></big>
+        <big><a href="#" onclick="arquivo('{$id}','{$nome}' )" title="Anexar Arquivo"><i class="fa fa-files-o text-primary"></i></a></big>
 
         <big><a href="#" onclick="contas('{$id}','{$nome}' )" title="Ver Contas"><i class="fa fa-dollar text-verde"></i></a></big>
+
+        <big><a href="#" onclick="contrato('{$id}','{$nome}' )" title="Gerar Contratos"><i class="fa fa-file-pdf-o text-primary"></i></a></big>
         
 </td>    
 </tr>
@@ -209,6 +224,16 @@ function limparArquivos(){
     $('#foto').val('');
     $('#target').attr("src","images/arquivos/sem-foto.png");
 
+}
+
+function contrato(id, nome){
+    
+    $('#titulo_contrato').text(nome);
+    $('#id_contrato').val(id);
+    $('#modalContrato').modal('show');
+    
+    listarTextoContrato(id);
+       
 }
 
 </script>
