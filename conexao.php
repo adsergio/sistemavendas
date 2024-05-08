@@ -1,5 +1,5 @@
 <?php 
-$banco = 'sas';
+$banco = 'sas_novo';
 $usuario = 'root';
 $senha = '';
 $servidor = 'localhost';
@@ -12,7 +12,6 @@ if($url[1] == 'localhost/'){
 
 date_default_timezone_set('America/Sao_Paulo');
 
-
 try {
 	$pdo = new PDO("mysql:dbname=$banco;host=$servidor;charset=utf8", "$usuario", "$senha");
 } catch (Exception $e) {
@@ -21,4 +20,4 @@ try {
 
 
 
- 
+ ?>

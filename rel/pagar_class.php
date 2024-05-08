@@ -1,19 +1,18 @@
 <?php 
 include('../conexao.php');
+
 $dataInicial = $_POST['dataInicial'];
 $dataFinal = $_POST['dataFinal'];
-$pago = urldecode($_POST['pago']);
-$busca = urldecode($_POST['busca']) ;
-
-
+$pago = urlencode($_POST['pago']);
+$busca = urlencode($_POST['busca']);
 
 //ALIMENTAR OS DADOS NO RELATÓRIO
 $html = file_get_contents($url_sistema."rel/pagar.php?dataInicial=$dataInicial&dataFinal=$dataFinal&pago=$pago&busca=$busca");
-//Verificar tipo do relatório no config.
+
+//verificar tipo do relatorio no config
 $query = $pdo->query("SELECT * FROM config WHERE empresa = 0");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $tipo_rel = $res[0]['tipo_rel'];
-
 
 if($tipo_rel != 'PDF'){
 	echo $html;
@@ -45,8 +44,8 @@ $pdf->render();
 
 //NOMEAR O PDF GERADO
 $pdf->stream(
-'recebimentos.pdf',
+'despesas.pdf',
 array("Attachment" => false)
 );
 
- 
+ ?>

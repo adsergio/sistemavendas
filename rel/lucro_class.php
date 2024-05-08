@@ -1,17 +1,17 @@
 <?php 
 include('../conexao.php');
+
 $dataInicial = $_POST['dataInicial'];
 $dataFinal = $_POST['dataFinal'];
+
 
 //ALIMENTAR OS DADOS NO RELATÓRIO
 $html = file_get_contents($url_sistema."rel/lucro.php?dataInicial=$dataInicial&dataFinal=$dataFinal");
 
-
-//Verificar tipo do relatório no config.
+//verificar tipo do relatorio no config
 $query = $pdo->query("SELECT * FROM config WHERE empresa = 0");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $tipo_rel = $res[0]['tipo_rel'];
-
 
 if($tipo_rel != 'PDF'){
 	echo $html;
@@ -47,4 +47,4 @@ $pdf->stream(
 array("Attachment" => false)
 );
 
- 
+ ?>
